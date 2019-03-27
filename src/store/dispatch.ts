@@ -1,9 +1,10 @@
-import Project, { BinaryExpression, TypeGuards } from 'ts-morph'
+import Project, { BinaryExpression, TypeGuards, ScriptTarget } from 'ts-morph'
 import { dispatch } from '..'
 import { packedExamples } from '../examples/packedExamples'
 import { EXAMPLES_ACTIONS } from './examples'
 import { OUTPUT_ACTIONS } from './output'
 import { Output, State } from './types'
+import { ModuleKind, JsxEmit } from 'typescript';
 
 // TODO: move to saga
 // TODO: before exec, if editor has a sample, then change it to selected example first and then exec
@@ -17,13 +18,13 @@ export function executeSelectedExample(state: State) {
       // TODO: try to eval the whole emitted text, get the exported class,  instance it, and call execute on that
       const p = new Project({
         // HEADS UP : this should be the most similar to project tsconfig.json
-        // compilerOptions: {
-        // target: ScriptTarget.ES2018,
-        // module: ModuleKind.CommonJS,
-        // lib: ["lib.es2018", "lib.dom"],
-        // jsx: JsxEmit.React,
-        // esModuleInterop: true,
-        // }
+        compilerOptions: {
+        target: ScriptTarget.ES2018,
+        module: ModuleKind.CommonJS,
+        lib: ["lib.es2018", "lib.dom"],
+        jsx: JsxEmit.React,
+        esModuleInterop: true,
+        }
       })
       p.createSourceFile('test.ts', stateExample.content)
       let result: Output
@@ -56,3 +57,5 @@ ${toEval}`
     }
   }
 }
+
+

@@ -6,6 +6,7 @@ import { isDesktop } from '../util/style'
 import { EXAMPLES_ACTIONS } from '../store/examples'
 import { dispatch } from '..'
 import { FILES_ACTIONS } from '../store/files'
+import { ts_morph_d_ts } from '../examples/ts_morph_d_ts';
 
 interface P {
   files: File[]
@@ -74,28 +75,34 @@ class MonacoEditor extends React.Component<P, {}> {
     if (MonacoEditor.editor) {
       const models = monaco.editor.getModels().map(m => m.uri.toString())
       this.props.files
-        .filter(f => !models.includes(MonacoEditor.buildModelUrl(f)))
-        .forEach(f => {
-          monaco.editor.createModel(f.content, 'typescript', monaco.Uri.parse(`file://${f.filePath}`))
-        })
+      .filter(f => !models.includes(MonacoEditor.buildModelUrl(f)))
+      .forEach(f => {
+        monaco.editor.createModel(f.content, 'typescript', monaco.Uri.parse(`file://${f.filePath}`))
+      })
       return
     }
-
+    
     const containerEl = this.containerEl.current
     if (!containerEl) {
       return
     }
-
+    
+    // monaco.editor.createModel(ts_morph_d_ts, 'typescript', monaco.Uri.parse(MonacoEditor.buildModelUrl('lib/ts-morph.d.ts')))
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(ts_morph_d_ts,   'lib/ts-morph.d.ts')
     this.props.files.forEach(f =>
       monaco.editor.createModel(f.content, 'typescript', monaco.Uri.parse(MonacoEditor.buildModelUrl(f)))
     )
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
       target: monaco.languages.typescript.ScriptTarget.ES2018,
-      // allowNonTsExtensions: true,
+      allowNonTsExtensions: true,
       moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
       module: monaco.languages.typescript.ModuleKind.CommonJS,
       noEmit: true,
-      typeRoots: ['node_modules/@types'],
+      // typeRoots: ['node_modules/@types'],
+      baseUrl: '.',
+      paths: {
+        'ts-morph': ['lib/ts-morph']
+      },
       jsx: monaco.languages.typescript.JsxEmit.React
       // jsxFactory: 'JSXAlone.createElement',
     })
@@ -115,9 +122,12 @@ class MonacoEditor extends React.Component<P, {}> {
             enabled: false
           }
     })
+
+
+
   }
-  static buildModelUrl(f: File): string {
-    return `file://${f.filePath}`
+  static buildModelUrl(f: File|string): string {
+    return `file://${typeof f==='string' ? f : f.filePath}`
   }
 }
 
