@@ -12,13 +12,14 @@ export default class implements PackedExample {
       .map(f => ({ name: f.getFilePath(), ast: this.printAst(f, 0) }))
       .map(
         p => `
-  ${p.name}
-  --------------
-  
-  ${p.ast}
-  `
+${p.name}
+--------------
+
+${p.ast}
+`
       )
       .join('')
+      .trim()
 
     return { text }
   }

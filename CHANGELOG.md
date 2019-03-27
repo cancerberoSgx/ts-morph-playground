@@ -14,3 +14,5 @@
  * simple light and dark themes
 
 # 0.0.3
+
+ * appcache

@@ -1,19 +1,18 @@
-import { State, Output } from './types'
-import { packedExamples } from '../examples/packedExamples'
+import Project, { BinaryExpression, TypeGuards } from 'ts-morph'
 import { dispatch } from '..'
+import { packedExamples } from '../examples/packedExamples'
+import { EXAMPLES_ACTIONS } from './examples'
 import { OUTPUT_ACTIONS } from './output'
-import Project, { TypeGuards, BinaryExpression, ScriptTarget } from 'ts-morph'
-import { ModuleKind, JsxEmit } from 'typescript'
-import * as tsMorph from 'ts-morph'
+import { Output, State } from './types'
 
 // TODO: move to saga
 // TODO: before exec, if editor has a sample, then change it to selected example first and then exec
 export function executeSelectedExample(state: State) {
-  const selected = state.selectedFile //examples.find(e => !!e.selected)
-  if (selected) {
-    const ex = packedExamples.find(e => e.filePath === selected.filePath)
-    const stateExample = state.examples.find(e => !!e.selected)
-    if (ex && stateExample) {
+  const stateExample = state.examples.find(e => !!e.selected)
+  if (stateExample) {
+    dispatch({ type: EXAMPLES_ACTIONS.SELECT, example: stateExample })
+    const ex = packedExamples.find(e => e.filePath === stateExample.filePath)
+    if (ex) {
       // HEADS UP : ugly hack : we emit the example content and then replace the execute method.
       // TODO: try to eval the whole emitted text, get the exported class,  instance it, and call execute on that
       const p = new Project({
@@ -27,7 +26,6 @@ export function executeSelectedExample(state: State) {
         // }
       })
       p.createSourceFile('test.ts', stateExample.content)
-
       let result: Output
       let toEval: string = ''
       try {

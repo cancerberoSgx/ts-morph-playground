@@ -20,7 +20,6 @@ export const files: Reducer<File[], filesActions> = (state = initialState, actio
       return state
   }
 }
-
 interface AddFileAction extends Action<FILES_ACTIONS.ADD> {
   type: FILES_ACTIONS.ADD
   file: File

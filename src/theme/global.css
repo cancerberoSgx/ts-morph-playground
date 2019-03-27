@@ -1,0 +1,14 @@
+a {
+  cursor: pointer;
+}
+.selected a {
+  text-decoration: underline;
+  font-weight: bolder;
+}
+#editorContainer {
+  width: 100%;
+  height: 500px;
+}
+body {
+  margin: 0
+}

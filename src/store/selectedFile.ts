@@ -5,7 +5,7 @@ import { all, call, put, select, takeEvery } from 'redux-saga/effects'
 import { FILES_ACTIONS, SelectFileAction } from './files'
 import { dispatch } from '..'
 import { EXAMPLES_ACTIONS, SelectExampleAction } from './examples'
-import { Editor } from '../components/Editor2'
+import { Editor } from '../components/editor'
 
 export enum SELECTED_FILE_ACTIONS {
   SELECT = 'SELECTED_FILE_SELECT'

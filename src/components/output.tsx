@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { Output as OutputState, State } from '../store/types'
-import './app.css'
 import { Theme } from '../theme/theme'
 import { createStyles, commonStyles } from '../theme/style'
 import withStyles, { WithSheet } from 'react-jss'
@@ -9,6 +8,7 @@ import withStyles, { WithSheet } from 'react-jss'
 interface P extends WithSheet<typeof styles, Theme> {
   output?: OutputState
 }
+
 class Output_ extends React.Component<P, {}> {
   render() {
     const { classes } = this.props
