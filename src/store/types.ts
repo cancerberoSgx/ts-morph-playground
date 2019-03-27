@@ -15,7 +15,7 @@ export interface File {
 }
 
 export interface Output {
-  text: string
+  text?: string
 }
 export interface Example extends File {
   name: string

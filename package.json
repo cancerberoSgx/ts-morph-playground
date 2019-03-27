@@ -10,8 +10,8 @@
     "start": "npx parcel start src/index.html",
     "prettier": " npx prettier  --write --arrow-parens avoid --parser typescript --use-tabs false --no-semi true --single-quote true --tab-width 2 --trailing-comma none --end-of-line lf --prose-wrap preserve --print-width 120 --jsx-bracket-same-line true \"src/**/*.ts*\"",
     "clean": "rm -rf dist docs",
-    "pack-examples": "npx embed-json-in-ts --mode string --input src/examples/toPack/printAst.ts --output src/examples/packed --preserveExtension --debug",
-    "all": "npm run clean && npm run prettier && npm run build"
+    "pack": "npx embed-json-in-ts --mode string --input src/examples/toPack/printAst.ts --output src/examples/packed --preserveExtension --debug",
+    "all": "npm run clean && npm run pack && npm run prettier && npm run build"
   },
   "keywords": [
     "TypeScript",
@@ -24,11 +24,12 @@
   "author": "Sebastian Gurin",
   "license": "MIT",
   "dependencies": {
-    "ts-morph": "^1.3.1",
+    "monaco-editor": "^0.16.0",
     "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
-    "react-dom": "^16.8.3"
+    "ts-morph": "^1.3.1"
   },
   "devDependencies": {
     "@types/node": "^11.11.6",

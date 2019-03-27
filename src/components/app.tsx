@@ -29,7 +29,7 @@ class App_ extends React.Component<{ state: State }, {}> {
               <ExampleEditor /> <button onClick={ev => executeSelectedExample(this.props.state)}>Execute</button>
             </div>
           )}
-          {this.props.state.output && (
+          {this.props.state.output && this.props.state.output.text && (
             <div className="output">
               <Output />
             </div>

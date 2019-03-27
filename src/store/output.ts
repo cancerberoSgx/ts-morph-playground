@@ -21,6 +21,4 @@ interface SetOutputAction extends Action<OUTPUT_ACTIONS.SET> {
 
 export type OutputActions = SetOutputAction
 
-const initialState = {
-  text: ''
-}
+const initialState = {}

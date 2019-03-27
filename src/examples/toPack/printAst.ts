@@ -1,11 +1,11 @@
-import Project, { Node, TypeGuards } from 'ts-morph'
+import * as tsMorph from 'ts-morph'
 import { State } from '../../store/types'
 import { PackedExample } from '../packedExamples'
 import { printAst_ts } from '../packed/printAst_ts'
 
 export default class implements PackedExample {
   execute(state: State) {
-    const project = new Project()
+    const project = new tsMorph.Project()
     const selected = state.files.find(f => !!f.selected)
     const text = (selected ? [selected] : state.files)
       .map(f => project.createSourceFile(f.filePath, f.content))
@@ -23,7 +23,7 @@ export default class implements PackedExample {
     return { text }
   }
 
-  private printAst(n: Node, level: number) {
+  private printAst(n: tsMorph.Node, level: number) {
     let s = this.printNode(n, level) + '\n'
     n.forEachChild(c => (s += this.printAst(c, level + 1)))
     return s
@@ -33,8 +33,8 @@ export default class implements PackedExample {
     return new Array(i * tabSize).fill(' ').join('')
   }
 
-  private printNode(n: Node, level: number) {
-    const name = TypeGuards.isNameableNode(n) ? n.getName() : ''
+  private printNode(n: tsMorph.Node, level: number) {
+    const name = tsMorph.TypeGuards.isNameableNode(n) ? n.getName() : ''
     const kind = n.getKindName()
     const text = n
       .getText()

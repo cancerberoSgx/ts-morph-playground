@@ -8,7 +8,7 @@ const mapStateToProps = (state: State) => ({
   file: state.examples.find(f => !!f.selected),
 
   onChange(content: string) {
-    // dispatch({ type: EXAMPLES_ACTIONS.EDIT, content })
+    dispatch({ type: EXAMPLES_ACTIONS.EDIT, content })
   }
 })
 
