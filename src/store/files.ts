@@ -1,5 +1,5 @@
 import { Action, Reducer } from 'redux'
-import { File } from './types'
+import { File, Selection } from './types'
 
 export enum FILES_ACTIONS {
   ADD = 'FILES_ADD',
@@ -15,7 +15,15 @@ export const files: Reducer<File[], filesActions> = (state = initialState, actio
     case FILES_ACTIONS.SELECT:
       return [...state.map(f => ({ ...f, selected: f.filePath === action.file.filePath }))]
     case FILES_ACTIONS.EDIT:
-      return [...state.map(f => ({ ...f, content: f.selected ? action.content : f.content }))]
+      const selected = state.find(f => !!f.selected)!
+      return [
+        ...state.filter(f => f !== selected),
+        {
+          ...selected,
+          content: typeof action.content === 'undefined' ? selected.content : action.content,
+          selection: typeof action.selection === 'undefined' ? selected.selection : action.selection
+        }
+      ]
     default:
       return state
   }
@@ -30,7 +38,8 @@ export interface SelectFileAction extends Action<FILES_ACTIONS.SELECT> {
 }
 interface EditFileAction extends Action<FILES_ACTIONS.EDIT> {
   type: FILES_ACTIONS.EDIT
-  content: string
+  content?: string
+  selection?: Selection
 }
 export type filesActions = AddFileAction | SelectFileAction | EditFileAction
 

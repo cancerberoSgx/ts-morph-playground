@@ -1,9 +1,9 @@
 import Project, { BinaryExpression, TypeGuards, ScriptTarget } from 'ts-morph'
 import { dispatch } from '..'
 import { packedExamples } from '../examples/packedExamples'
-import { EXAMPLES_ACTIONS } from './examples'
-import { OUTPUT_ACTIONS } from './output'
-import { Output, State } from './types'
+import { EXAMPLES_ACTIONS } from '../store/examples'
+import { OUTPUT_ACTIONS } from '../store/output'
+import { Output, State } from '../store/types'
 import { ModuleKind, JsxEmit } from 'typescript'
 
 // TODO: move to saga
@@ -41,11 +41,14 @@ export function executeSelectedExample(state: State) {
               .endsWith('prototype.execute')
         ) as BinaryExpression
         const executeMethodText = be.getRight().getText()
-        toEval = `var tsMorph = ts_morph_1; (${executeMethodText})`
+        // debugger
+        toEval = `${prefix}(${executeMethodText})`
         const f = eval(toEval)
         ex.execute = f.bind(ex)
-        const files = state.files.find(f => !!f.selected) ? [state.files.find(f => !!f.selected)!] : state.files!
-        result = ex.execute({ files, selection: { pos: 0, end: 1, filePath: files[0].filePath } }) //TODO: selection
+        // const selected = state.files.find(f => !!f.selected)
+        // const files  = selected ? [selected] : state.files
+        // console.log(files);
+        result = ex.execute(state.files)
       } catch (ex) {
         result = {
           text: `ERROR: ${ex} 
@@ -58,3 +61,19 @@ ${toEval}`
     }
   }
 }
+
+const prefix = `
+var tsMorph = ts_morph_1; 
+var __assign = (this && this.__assign) || function () {
+  __assign = Object.assign || function(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+          s = arguments[i];
+          for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+              t[p] = s[p];
+      }
+      return t;
+  };
+  return __assign.apply(this, arguments);
+};
+
+`

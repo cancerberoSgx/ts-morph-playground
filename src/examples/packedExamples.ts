@@ -1,13 +1,12 @@
-import { Example, State, Output } from '../store/types'
+import { Example, State, Output, Selection, File } from '../store/types'
 import printAst from './toPack/printAst'
 import diagnostics from './toPack/diagnostics'
+import nodeContainingSelection from './toPack/nodeContainingSelection'
 
 export interface PackedExample extends Example {
-  execute(input?: {
-    files: { filePath: string; content: string }[]
-    selection?: { pos: number; end: number; filePath: string }
-  }): Output
+  execute(files?: File[]): Output
 }
 
-export const packedExamples: PackedExample[] = [new printAst(), new diagnostics()]
+export const packedExamples: PackedExample[] = [new printAst(), new diagnostics(), new nodeContainingSelection()]
+
 packedExamples[0].selected = true

@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { App } from './components/app'
-import { State } from './store/types'
+import { App } from './app'
+import { State } from '../store/types'
 import withStyles, { ThemeProvider, WithSheet } from 'react-jss'
-import { Theme } from './theme/theme'
+import { Theme } from '../theme/theme'
 
 const styles = {}
 interface P extends WithSheet<typeof styles, Theme> {

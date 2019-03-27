@@ -13,6 +13,8 @@ import { packedExamples } from '../examples/packedExamples'
 import { createStyles } from '../theme/style'
 import { Theme } from '../theme/theme'
 import withStyles, { WithSheet } from 'react-jss'
+import { throttle } from '../util/throttle'
+import { SELECTED_FILE_ACTIONS } from '../store/selectedFile'
 
 interface P extends WithSheet<typeof styles, Theme> {
   files: File[]
@@ -25,6 +27,9 @@ export class MonacoEditor extends React.Component<P, {}> {
   static setEditorFile(file: File) {
     const model = monaco.editor.getModels().find(m => m.uri.path === file.filePath)
     MonacoEditor.editor!.setModel(model!)
+    if (file.selection) {
+      MonacoEditor.editor!.setSelection(file.selection)
+    }
   }
 
   private containerEl: React.RefObject<HTMLDivElement>
@@ -40,14 +45,34 @@ export class MonacoEditor extends React.Component<P, {}> {
 
   componentDidMount() {
     this.installEditor()
-    MonacoEditor.editor!.getModel()!.onDidChangeContent(e => this.modelChanged())
+    MonacoEditor.editor!.getModel()!.onDidChangeContent(throttle(e => this.modelChanged(e), 1000, { trailing: true }))
+    MonacoEditor.editor!.onDidChangeCursorSelection(
+      throttle(e => this.cursorSelectionChanged(e), 2000, { trailing: true })
+    )
+  }
+
+  private cursorSelectionChanged(e: monaco.editor.ICursorSelectionChangedEvent): void {
+    dispatch({
+      type: SELECTED_FILE_ACTIONS.CHANGE_CURSOR_SELECTION,
+      selection: {
+        endColumn: e.selection.endColumn,
+        endLineNumber: e.selection.endLineNumber,
+        // positionColumn: e.selection.positionColumn,
+        // positionLineNumber: e.selection.positionLineNumber,
+        // selectionStartColumn: e.selection.selectionStartColumn,
+        // selectionStartLineNumber: e.selection.selectionStartLineNumber,
+        startColumn: e.selection.startColumn,
+        startLineNumber: e.selection.startLineNumber
+      }
+    })
+    // console.log(e);
   }
 
   render() {
     return <div className={this.props.classes.editor} ref={this.containerEl} />
   }
 
-  private modelChanged() {
+  private modelChanged(e: monaco.editor.IModelContentChangedEvent) {
     const model = MonacoEditor.editor!.getModel()!
     if (model.uri.path === '/lib/ts-morph.d.ts') {
       return

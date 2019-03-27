@@ -8,7 +8,7 @@ import { AllActions } from './store/types'
 import { selectedFileSagas } from './store/selectedFile'
 import { initMonacoWorkers } from './monaco/initMonacoWorkers'
 import { reducers } from './store/reducers'
-import { ThemedApp } from './themedApp'
+import { ThemedApp } from './components/themedApp'
 import { layoutSagas } from './store/layout'
 import './theme/global.css'
 
