@@ -7,9 +7,10 @@
     "build": "npm run clean && npx tsc && npx parcel build src/index.html -d docs --no-content-hash --detailed-report --public-url './' && npm run copy",
     "build-local": "npm run build && gzip docs/*.* && npx http-server docs --gzip",
     "copy": "cp src/index.appcache docs",
-    "start": "npx parcel start src/index.html",    
+    "start": "npx parcel start src/index.html",
     "prettier": " npx prettier  --write --arrow-parens avoid --parser typescript --use-tabs false --no-semi true --single-quote true --tab-width 2 --trailing-comma none --end-of-line lf --prose-wrap preserve --print-width 120 --jsx-bracket-same-line true \"src/**/*.ts*\"",
     "clean": "rm -rf dist docs",
+    "pack-examples": "npx embed-json-in-ts --mode string --input src/examples/toPack/printAst.ts --output src/examples/packed --preserveExtension --debug",
     "all": "npm run clean && npm run prettier && npm run build"
   },
   "keywords": [
@@ -34,11 +35,11 @@
     "@types/react": "^16.8.7",
     "@types/react-dom": "^16.8.2",
     "@types/react-redux": "^7.0.1",
+    "embed-json-in-ts": "0.0.8",
     "http-server": "^0.11.1",
     "parcel": "^1.11.0",
     "prettier": "^1.16.4",
-    "typescript": "^3.3.3333",
-    "typescript-poor-man-reflection": "0.0.5"
+    "typescript": "^3.3.3333"
   },
   "repository": "https://github.com/cancerberoSgx/ts-morph-playground"
 }

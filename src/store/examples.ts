@@ -1,8 +1,8 @@
 import { Action, Reducer } from 'redux'
 import { File, Example } from './types'
+import { packedExamples } from '../examples/packedExamples'
 
 export enum EXAMPLES_ACTIONS {
-  // EDIT = 'EXAMPLES_EDIT',
   SELECT = 'EXAMPLES_SELECT'
 }
 
@@ -22,10 +22,4 @@ interface SelectExampleAction extends Action<EXAMPLES_ACTIONS.SELECT> {
 
 export type ExamplesActions = SelectExampleAction
 
-const initialState = [
-  {
-    name: 'Print AST',
-    filePath: 'printAstExample.ts',
-    content: `//TODO`
-  }
-]
+const initialState = packedExamples

@@ -13,17 +13,16 @@
   grid-row: 1;
 }
 .wrapper>.examples { 
-  grid-column: 1/1;
+  grid-column: 1/4;
   grid-row: 2;
 }
 .wrapper>.examples-editor { 
-  grid-column: 2/4;
-  grid-row: 2;
-}
-
-.wrapper>.output { 
   grid-column: 1/4;
   grid-row: 3;
+}
+.wrapper>.output { 
+  grid-column: 1/4;
+  grid-row: 4;
 }
 
 a {

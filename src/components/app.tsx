@@ -6,10 +6,8 @@ import { connect } from 'react-redux'
 import { Examples } from './examples'
 import { FileEditor } from './fileEditor'
 import { ExampleEditor } from './exampleEditor'
-import printAstExample from '../examples/toPack/printAst'
 import { Output } from './output'
-import { dispatch } from '..'
-import { OUTPUT_ACTIONS } from '../store/output'
+import { executeSelectedExample } from '../store/dispatch'
 
 class App_ extends React.Component<{ state: State }, {}> {
   render() {
@@ -26,18 +24,16 @@ class App_ extends React.Component<{ state: State }, {}> {
           <div className="examples">
             <Examples />
           </div>
-          <div className="examples-editor">
-            <ExampleEditor />
-            <button
-              onClick={e =>
-                dispatch({ type: OUTPUT_ACTIONS.SET, output: { text: printAstExample(this.props.state) } })
-              }>
-              Execute
-            </button>
-          </div>
-          <div className="output">
-            <Output />
-          </div>
+          {this.props.state.examples.find(e => !!e.selected) && (
+            <div className="examples-editor">
+              <ExampleEditor /> <button onClick={ev => executeSelectedExample(this.props.state)}>Execute</button>
+            </div>
+          )}
+          {this.props.state.output && (
+            <div className="output">
+              <Output />
+            </div>
+          )}
         </div>
       </article>
     )
