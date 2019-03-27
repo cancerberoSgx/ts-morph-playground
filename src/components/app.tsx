@@ -8,6 +8,7 @@ import { FileEditor } from './fileEditor'
 import { ExampleEditor } from './exampleEditor'
 import { Output } from './output'
 import { executeSelectedExample } from '../store/dispatch'
+// import { Editor } from './Editor2';
 
 class App_ extends React.Component<{ state: State }, {}> {
   render() {
@@ -35,6 +36,7 @@ class App_ extends React.Component<{ state: State }, {}> {
             </div>
           )}
         </div>
+        {/* <Editor/> */}
       </article>
     )
   }
