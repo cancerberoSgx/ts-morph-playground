@@ -10,7 +10,8 @@
     "start": "mkdir -p dist && cp docs/*.worker.js dist && npx parcel start src/index.html",
     "prettier": " npx prettier  --write --arrow-parens avoid --parser typescript --use-tabs false --no-semi true --single-quote true --tab-width 2 --trailing-comma none --end-of-line lf --prose-wrap preserve --print-width 120 --jsx-bracket-same-line true \"src/**/*.ts*\"",
     "clean": "rm -rf dist docs",
-    "pack": "npx embed-json-in-ts --mode string --input src/examples/toPack/printAst.ts --output src/examples/packed --preserveExtension --debug && npx embed-json-in-ts --mode string --input node_modules/ts-morph/dist-declarations/ts-morph.d.ts --output src/examples/ --preserveExtension --debug",
+    "pack": "npm run pack-examples && npx embed-json-in-ts --mode string --input node_modules/ts-morph/dist-declarations/ts-morph.d.ts --output src/examples/ --preserveExtension --debug",
+    "pack-examples": "npx embed-json-in-ts --mode string --input \"src/examples/toPack/**/*.ts*\" --output src/examples/packed --preserveExtension --debug",
     "all": "npm run clean && npm run pack && npm run prettier && npm run build"
   },
   "keywords": [

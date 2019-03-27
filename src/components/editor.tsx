@@ -9,8 +9,12 @@ import { FILES_ACTIONS } from '../store/files'
 import { ts_morph_d_ts } from '../examples/ts_morph_d_ts'
 import { install } from '../monaco/navigateExternalDefinitions'
 import { buildModelUrl } from '../monaco/monaco'
+import { packedExamples } from '../examples/packedExamples';
+import { createStyles } from '../theme/style';
+import { Theme } from '../theme/theme';
+import withStyles, { WithSheet } from 'react-jss'
 
-interface P {
+interface P extends WithSheet<typeof styles, Theme> {
   files: File[]
   selectedFile: File
 }
@@ -40,7 +44,7 @@ class MonacoEditor extends React.Component<P, {}> {
   }
 
   render() {
-    return <div id="editorContainer" className="editorContainer" ref={this.containerEl} />
+    return <div className={this.props.classes.editor} ref={this.containerEl} />
   }
 
   private modelChanged() {
@@ -48,14 +52,14 @@ class MonacoEditor extends React.Component<P, {}> {
     if (model.uri.path === '/lib/ts-morph.d.ts') {
       return
     }
-    if (model.uri.path.startsWith('/src/')) {
+    if (packedExamples.find(e => e.filePath === model.uri.path)) {
       dispatch({
-        type: FILES_ACTIONS.EDIT,
+        type: EXAMPLES_ACTIONS.EDIT,
         content: model.getValue()
       })
     } else {
       dispatch({
-        type: EXAMPLES_ACTIONS.EDIT,
+        type: FILES_ACTIONS.EDIT,
         content: model.getValue()
       })
     }
@@ -79,11 +83,12 @@ class MonacoEditor extends React.Component<P, {}> {
     monaco.editor.createModel(ts_morph_d_ts, 'typescript', buildModelUrl('/lib/ts-morph.d.ts'))
     this.props.files.forEach(f => monaco.editor.createModel(f.content, 'typescript', buildModelUrl(f)))
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-      target: monaco.languages.typescript.ScriptTarget.ES2018,
+      target: monaco.languages.typescript.ScriptTarget.ESNext,
       allowNonTsExtensions: true,
       moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
       module: monaco.languages.typescript.ModuleKind.CommonJS,
       noEmit: true,
+      libs: ['dom','esnext'],
       baseUrl: '.',
       paths: {
         'ts-morph': ['file:///lib/ts-morph']
@@ -100,8 +105,8 @@ class MonacoEditor extends React.Component<P, {}> {
       minimap: isDesktop()
         ? undefined
         : {
-            enabled: false
-          }
+          enabled: false
+        }
     })
     install(MonacoEditor.editor!, (editor, model, def) => {
       editor.setModel(model)
@@ -111,7 +116,15 @@ class MonacoEditor extends React.Component<P, {}> {
   }
 }
 
-export const Editor = connect((state: State) => ({
+const styles = (theme: Theme) =>
+  createStyles({
+    editor: {
+      width: '100%',
+      height: '500px'
+    }
+  })
+
+export const Editor = withStyles(styles)(connect((state: State) => ({
   files: [...state.files, ...state.examples],
   selectedFile: state.selectedFile
-}))(MonacoEditor)
+}))(MonacoEditor))

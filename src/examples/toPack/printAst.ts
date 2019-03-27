@@ -1,7 +1,7 @@
 import * as tsMorph from 'ts-morph'
 
 export default class implements PackedExample {
-  execute(input: {files: { filePath: string; content: string }[], selection: {pos: number, end: number, filePath: string}}) {
+  execute(input: {files: { filePath: string; content: string }[]}) {
     const project = new tsMorph.Project()
     const text = input.files
       .map(f => project.createSourceFile(f.filePath, f.content))
@@ -26,7 +26,7 @@ ${p.ast}
     return s
   }
 
-  private indent(i: number = 1, tabSize = 2): string {
+  private indent(i: number = 0, tabSize = 2): string {
     return new Array(i * tabSize).fill(' ').join('')
   }
 

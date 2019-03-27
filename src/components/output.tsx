@@ -16,7 +16,7 @@ class Output_ extends React.Component<P, {}> {
       this.props.output && (
         <article>
           <h1>Execution output</h1>
-          <textarea className={classes.textarea} value={this.props.output.text} />
+          <textarea className={classes.textarea} value={this.props.output.text} onChange={e=>{}}/>
         </article>
       )
     )
