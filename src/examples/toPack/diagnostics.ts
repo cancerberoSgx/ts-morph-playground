@@ -21,7 +21,8 @@ export default class implements PackedExample {
       }))
       .flat()
       .filter(e => e.text.trim())
-      .map(e => `
+      .map(e =>
+        `
 ${base.getRelativePathTo(e.f)}:
 ${e.text}
 `.trim()
@@ -43,8 +44,6 @@ ${e.text}
         }))
     }
   }
-
-  
 
   filePath = '/examples/diagnostics.ts'
   name = 'Project Diagnostics'
