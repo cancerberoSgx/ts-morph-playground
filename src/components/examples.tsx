@@ -1,8 +1,8 @@
 import * as React from 'react';
-import './Examples.css'
-import { File, State, Example } from '../store/types';
+import { State, Example } from '../store/types';
 import { connect } from 'react-redux';
 import { dispatch } from '..';
+import { EXAMPLES_ACTIONS } from '../store/examples';
 
 interface P {
   examples: Example[]
@@ -11,18 +11,20 @@ interface P {
 class Examples_ extends React.Component<P, {}> {
   render() {
     return <article className="examples">
+    <h2>Examples</h2>
       <ul>
-        {this.props.examples.map(e=><li key={e.name}>
-        <button onClick={e=>dispatch({})}>{e.name}</button>
+        {this.props.examples.map(example=>
+        <li  className={`example ${example.selected ? 'selected' : ''}`} key={example.name}>
+        <a onClick={e=>dispatch({type: EXAMPLES_ACTIONS.SELECT, example })}>{example.name}</a>
         </li>)}
       </ul>
-    />
-    </article> : <div>select a file</div>
+    
+    </article>  
   }
 }
 
 const mapStateToProps = (state: State) => ({
-  file: state.files.find(f=>!!f.selected)
+  examples: state.examples
 })
 
 export const Examples = connect(mapStateToProps)(Examples_)

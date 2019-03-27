@@ -1,17 +1,19 @@
 
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import { App } from './components/app';
-import { files } from './store/files';
-import { State, AllActions } from './store/types';
-import { ReducersMapObject, combineReducers, createStore, Action } from 'redux';
 import { Provider } from 'react-redux';
+import { combineReducers, createStore } from 'redux';
+import { App } from './components/app';
+import { examples } from './store/examples';
+import { files } from './store/files';
+import { AllActions, State } from './store/types';
+import { output } from './store/output';
 
-const reducerStateMap: ReducersMapObject<State, AllActions> = {
-  files: files
-}
-
-const reducers = combineReducers<State>(reducerStateMap)
+const reducers = combineReducers<State>({
+  files: files,
+  examples: examples,
+  output: output
+})
 
 const store = createStore(reducers)
 
@@ -26,5 +28,7 @@ ReactDom.render(
 )
 
 export function dispatch(a: AllActions) {
+  console.log(a, store.getState());
+  
   store.dispatch(a)
 }

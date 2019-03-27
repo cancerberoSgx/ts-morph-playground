@@ -6,7 +6,7 @@ export enum EXAMPLES_ACTIONS {
   SELECT = 'EXAMPLES_SELECT',
 }
 
-export const Examples: Reducer<Example[], ExamplesActions> = (
+export const examples: Reducer<Example[], ExamplesActions> = (
   state = initialState,
   action,
 ) => {

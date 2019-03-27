@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './files.css'
 import { File, State } from '../store/types';
 import { connect } from 'react-redux';
 import { dispatch } from '..';
@@ -7,13 +6,14 @@ import { FILES_ACTIONS } from '../store/files';
 
 interface P { files: File[] }
 
-class Editors_ extends React.Component<P, {}> {
+class Files_ extends React.Component<P, {}> {
   render() {
     return <article className="files">
-     {/* <a onClick={e=>dispatch({type: FILES_ACTIONS.SELECT, file: f})}>{f.filePath}</a> */}
+    <h3>Sample project files</h3>
       <button onClick={e=>this.add()}>Add</button>
       <ul>
-        {this.props.files.map(f=><li className="file" key={f.filePath}>
+        {this.props.files.map(f=>
+        <li className={`file ${f.selected ? 'selected' : ''}`} key={f.filePath}>
           <a onClick={e=>dispatch({type: FILES_ACTIONS.SELECT, file: f})}>{f.filePath}</a>
         </li>)}
       </ul>
@@ -31,4 +31,4 @@ const mapStateToProps = (state: State) => ({
   files: state.files
 })
 
-export const Editors = connect(mapStateToProps)(Editors_)
+export const Files = connect(mapStateToProps)(Files_)
