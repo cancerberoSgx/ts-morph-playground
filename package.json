@@ -1,0 +1,39 @@
+{
+  "name": "ts-morph-browser-example",
+  "version": "0.0.1",
+  "description": "extra utilities for ts-simple-ast ",
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && npx parcel build src/index.html -d docs --no-content-hash --detailed-report --public-url './' && npm run copy",
+    "build-local": "rm -rf docs && npm run build && gzip docs/*.* && npx http-server docs --gzip",
+    "copy": "cp src/index.appcache docs",
+    "start": "npx parcel start src/index.html",
+    "clean": "rm -rf dist docs"
+  },
+  "keywords": [
+    "TypeScript",
+    "TypeScript Language Service",
+    "plugin"
+  ],
+  "author": "Sebastian Gurin",
+  "license": "MIT",
+  "dependencies": {
+    "ts-morph": "^1.3.1",
+    "react": "^16.8.3",
+    "react-redux": "^6.0.0",
+    "redux": "^4.0.1",
+    "redux-saga": "^1.0.2",
+    "react-dom": "^16.8.3"
+  },
+  "devDependencies": {
+    "@types/node": "^11.11.6",
+    "@types/react": "^16.8.7",
+    "@types/react-dom": "^16.8.2",
+    "@types/react-redux": "^7.0.1",
+    "http-server": "^0.11.1",
+    "parcel": "^1.11.0",
+    "typescript": "^3.3.3333"
+  },
+  "repository": "https://github.com/cancerberoSgx/ts-morph-browser-example"
+}
