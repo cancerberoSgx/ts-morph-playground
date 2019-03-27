@@ -5,7 +5,7 @@ import { all, call, put, select, takeEvery } from 'redux-saga/effects'
 import { FILES_ACTIONS, SelectFileAction } from './files'
 import { dispatch } from '..'
 import { EXAMPLES_ACTIONS, SelectExampleAction } from './examples'
-import { Editor } from '../components/editor'
+import { Editor, MonacoEditor } from '../components/editor'
 
 export enum SELECTED_FILE_ACTIONS {
   SELECT = 'SELECTED_FILE_SELECT'
@@ -42,7 +42,7 @@ function* watchExampleSelected() {
 
 function dispatchSelectedFile(file: File) {
   dispatch({ type: SELECTED_FILE_ACTIONS.SELECT, file })
-  Editor.setEditorFile(file)
+  MonacoEditor.setEditorFile(file)
 }
 
 export function* selectedFileSagas() {

@@ -1,7 +1,7 @@
 import * as tsMorph from 'ts-morph'
 
 export default class implements PackedExample {
-  execute(input: {files: { filePath: string; content: string }[]}) {
+  execute(input: { files: { filePath: string; content: string }[] }) {
     const project = new tsMorph.Project()
     const text = input.files
       .map(f => project.createSourceFile(f.filePath, f.content))

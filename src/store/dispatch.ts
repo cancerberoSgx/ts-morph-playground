@@ -45,7 +45,7 @@ export function executeSelectedExample(state: State) {
         const f = eval(toEval)
         ex.execute = f.bind(ex)
         const files = state.files.find(f => !!f.selected) ? [state.files.find(f => !!f.selected)!] : state.files!
-        result = ex.execute({files, selection: {pos: 0, end: 1, filePath: files[0].filePath}}) //TODO: selection
+        result = ex.execute({ files, selection: { pos: 0, end: 1, filePath: files[0].filePath } }) //TODO: selection
       } catch (ex) {
         result = {
           text: `ERROR: ${ex} 

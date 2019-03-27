@@ -9,9 +9,9 @@ import { FILES_ACTIONS } from '../store/files'
 import { ts_morph_d_ts } from '../examples/ts_morph_d_ts'
 import { install } from '../monaco/navigateExternalDefinitions'
 import { buildModelUrl } from '../monaco/monaco'
-import { packedExamples } from '../examples/packedExamples';
-import { createStyles } from '../theme/style';
-import { Theme } from '../theme/theme';
+import { packedExamples } from '../examples/packedExamples'
+import { createStyles } from '../theme/style'
+import { Theme } from '../theme/theme'
 import withStyles, { WithSheet } from 'react-jss'
 
 interface P extends WithSheet<typeof styles, Theme> {
@@ -19,7 +19,7 @@ interface P extends WithSheet<typeof styles, Theme> {
   selectedFile: File
 }
 
-class MonacoEditor extends React.Component<P, {}> {
+export class MonacoEditor extends React.Component<P, {}> {
   static editor: monaco.editor.IStandaloneCodeEditor | undefined
 
   static setEditorFile(file: File) {
@@ -88,7 +88,7 @@ class MonacoEditor extends React.Component<P, {}> {
       moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
       module: monaco.languages.typescript.ModuleKind.CommonJS,
       noEmit: true,
-      libs: ['dom','esnext'],
+      libs: ['dom', 'esnext'],
       baseUrl: '.',
       paths: {
         'ts-morph': ['file:///lib/ts-morph']
@@ -105,8 +105,8 @@ class MonacoEditor extends React.Component<P, {}> {
       minimap: isDesktop()
         ? undefined
         : {
-          enabled: false
-        }
+            enabled: false
+          }
     })
     install(MonacoEditor.editor!, (editor, model, def) => {
       editor.setModel(model)
@@ -124,7 +124,9 @@ const styles = (theme: Theme) =>
     }
   })
 
-export const Editor = withStyles(styles)(connect((state: State) => ({
-  files: [...state.files, ...state.examples],
-  selectedFile: state.selectedFile
-}))(MonacoEditor))
+export const Editor = withStyles(styles)(
+  connect((state: State) => ({
+    files: [...state.files, ...state.examples],
+    selectedFile: state.selectedFile
+  }))(MonacoEditor)
+)
