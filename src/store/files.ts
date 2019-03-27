@@ -56,8 +56,7 @@ console.log(tool({
   who: 'World'
 }))
   `.trim()
-  }
-  ,
+  },
   {
     filePath: '/src/ui/app.tsx',
     content: `

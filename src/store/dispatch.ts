@@ -4,14 +4,14 @@ import { packedExamples } from '../examples/packedExamples'
 import { EXAMPLES_ACTIONS } from './examples'
 import { OUTPUT_ACTIONS } from './output'
 import { Output, State } from './types'
-import { ModuleKind, JsxEmit } from 'typescript';
+import { ModuleKind, JsxEmit } from 'typescript'
 
 // TODO: move to saga
 // TODO: before exec, if editor has a sample, then change it to selected example first and then exec
 export function executeSelectedExample(state: State) {
   const stateExample = state.examples.find(e => !!e.selected)
   if (stateExample) {
-    dispatch({ type: EXAMPLES_ACTIONS.SELECT, example: stateExample })
+    // dispatch({ type: EXAMPLES_ACTIONS.SELECT, example: stateExample })
     const ex = packedExamples.find(e => e.filePath === stateExample.filePath)
     if (ex) {
       // HEADS UP : ugly hack : we emit the example content and then replace the execute method.
@@ -44,7 +44,8 @@ export function executeSelectedExample(state: State) {
         toEval = `var tsMorph = ts_morph_1; (${executeMethodText})`
         const f = eval(toEval)
         ex.execute = f.bind(ex)
-        result = ex.execute(state.files.find(f=>!!f.selected) ? [state.files.find(f=>!!f.selected)!] : state.files!)
+        const files = state.files.find(f => !!f.selected) ? [state.files.find(f => !!f.selected)!] : state.files!
+        result = ex.execute({files, selection: {pos: 0, end: 1, filePath: files[0].filePath}}) //TODO: selection
       } catch (ex) {
         result = {
           text: `ERROR: ${ex} 
@@ -57,5 +58,3 @@ ${toEval}`
     }
   }
 }
-
-

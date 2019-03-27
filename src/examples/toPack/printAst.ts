@@ -1,11 +1,9 @@
 import * as tsMorph from 'ts-morph'
 
 export default class implements PackedExample {
-
-  execute(files: {filePath: string, content: string}[]) {
-
+  execute(input: {files: { filePath: string; content: string }[], selection: {pos: number, end: number, filePath: string}}) {
     const project = new tsMorph.Project()
-    const text = files
+    const text = input.files
       .map(f => project.createSourceFile(f.filePath, f.content))
       .map(f => ({ name: f.getFilePath(), ast: this.printAst(f, 0) }))
       .map(

@@ -1,4 +1,3 @@
-
 /** Removes undefined from type */
 export type NotUndefined<T> = Exclude<T, undefined>
 
