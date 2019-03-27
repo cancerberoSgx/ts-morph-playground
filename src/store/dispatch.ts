@@ -18,13 +18,13 @@ export function executeSelectedExample(state: State) {
       // TODO: try to eval the whole emitted text, get the exported class,  instance it, and call execute on that
       const p = new Project({
         // HEADS UP : this should be the most similar to project tsconfig.json
-        compilerOptions: {
-        target: ScriptTarget.ES2018,
-        module: ModuleKind.CommonJS,
-        lib: ["lib.es2018", "lib.dom"],
-        jsx: JsxEmit.React,
-        esModuleInterop: true,
-        }
+        // compilerOptions: {
+        // target: ScriptTarget.ES2018,
+        // module: ModuleKind.CommonJS,
+        // lib: ["lib.es2018", "lib.dom"],
+        // jsx: JsxEmit.React,
+        // esModuleInterop: true,
+        // }
       })
       p.createSourceFile('test.ts', stateExample.content)
       let result: Output
@@ -44,7 +44,7 @@ export function executeSelectedExample(state: State) {
         toEval = `var tsMorph = ts_morph_1; (${executeMethodText})`
         const f = eval(toEval)
         ex.execute = f.bind(ex)
-        result = ex.execute(state)
+        result = ex.execute(state.files.find(f=>!!f.selected) ? [state.files.find(f=>!!f.selected)!] : state.files!)
       } catch (ex) {
         result = {
           text: `ERROR: ${ex} 

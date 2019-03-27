@@ -35,6 +35,6 @@ function* rootSaga() {
 sagaMiddleware.run(rootSaga)
 
 export function dispatch(a: AllActions) {
-  console.log(a, store.getState())
+  // console.log(a, store.getState())
   store.dispatch(a)
 }

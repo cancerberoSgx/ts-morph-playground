@@ -57,4 +57,16 @@ console.log(tool({
 }))
   `.trim()
   }
+  ,
+  {
+    filePath: 'src/ui/app.tsx',
+    content: `
+import * as React from 'react'
+export class App extends React.Component<{}, {}> {
+  render(){
+    return <div>Hello world</div>
+  }
+}
+  `.trim()
+  }
 ]

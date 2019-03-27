@@ -1,13 +1,11 @@
 import * as tsMorph from 'ts-morph'
-import { State } from '../../store/types'
-import { PackedExample } from '../packedExamples'
-import { printAst_ts } from '../packed/printAst_ts'
 
 export default class implements PackedExample {
-  execute(state: State) {
+
+  execute(files: {filePath: string, content: string}[]) {
+
     const project = new tsMorph.Project()
-    const selected = state.files.find(f => !!f.selected)
-    const text = (selected ? [selected] : state.files)
+    const text = files
       .map(f => project.createSourceFile(f.filePath, f.content))
       .map(f => ({ name: f.getFilePath(), ast: this.printAst(f, 0) }))
       .map(
@@ -51,3 +49,7 @@ ${p.ast}
   content = printAst_ts
   selected = false
 }
+
+import { State } from '../../store/types'
+import { PackedExample } from '../packedExamples'
+import { printAst_ts } from '../packed/printAst_ts'

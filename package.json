@@ -4,13 +4,13 @@
   "description": "ts-morph example gallery and playground application 100% in the browser",
   "private": true,
   "scripts": {
-    "build": "npm run clean && npx tsc && sh build-workers.sh && npx parcel build src/index.html -d docs --no-content-hash --detailed-report --public-url './' && npm run copy",
+    "build": "npm run clean && npm run pack && npx tsc && sh build-workers.sh && npx parcel build src/index.html -d docs --no-content-hash --detailed-report --public-url './' && npm run copy",
     "build-local": "npm run build && gzip docs/*.* && npx http-server docs --gzip",
     "copy": "cp src/index.appcache docs",
     "start": "mkdir -p dist && cp docs/*.worker.js dist && npx parcel start src/index.html",
     "prettier": " npx prettier  --write --arrow-parens avoid --parser typescript --use-tabs false --no-semi true --single-quote true --tab-width 2 --trailing-comma none --end-of-line lf --prose-wrap preserve --print-width 120 --jsx-bracket-same-line true \"src/**/*.ts*\"",
     "clean": "rm -rf dist docs",
-    "pack": "npx embed-json-in-ts --mode string --input src/examples/toPack/printAst.ts --output src/examples/packed --preserveExtension --debug",
+    "pack": "npx embed-json-in-ts --mode string --input src/examples/toPack/printAst.ts --output src/examples/packed --preserveExtension --debug && npx embed-json-in-ts --mode string --input node_modules/ts-morph/dist-declarations/ts-morph.d.ts --output src/examples/ --preserveExtension --debug",
     "all": "npm run clean && npm run pack && npm run prettier && npm run build"
   },
   "keywords": [
