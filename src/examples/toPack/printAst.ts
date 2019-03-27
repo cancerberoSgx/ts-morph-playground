@@ -1,7 +1,7 @@
 import * as tsMorph from 'ts-morph'
 
 export default class implements PackedExample {
-  execute(files: state.File[]) {
+  execute(files: File[]) {
     const project = new tsMorph.Project()
     const text = files
       .filter(f => files.find(f => !!f.selected) && f.selected)
@@ -40,12 +40,23 @@ ${p.ast}
     }
   }
 
-  filePath = '/examples/printAst.ts'
-  name = 'print AST'
-  description = 'Prints a textual AST representation of selected file or all of none selected'
+  filePath = '/src/examples/printAst.ts'
+  name = 'Print AST'
+  description = 'Prints a textual AST representation of selected file or all files of none selected'
   content = printAst_ts
 }
 
-import * as state from '../../store/types'
+interface File {
+  filePath: string
+  content: string
+  selected?: boolean
+  selection?: {
+    endColumn: number
+    endLineNumber: number
+    startColumn: number
+    startLineNumber: number
+  }
+}
+
 import { PackedExample } from '../packedExamples'
 import { printAst_ts } from '../packed/printAst_ts'

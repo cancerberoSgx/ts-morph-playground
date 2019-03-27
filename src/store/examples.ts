@@ -1,6 +1,11 @@
 import { Action, Reducer } from 'redux'
-import { File, Example } from './types'
+import { all, select, takeEvery } from 'redux-saga/effects'
+import { dispatch } from '..'
+import { MonacoEditor } from '../components/editor'
 import { packedExamples } from '../examples/packedExamples'
+import { executeSelectedExample } from '../util/executeSelectedExample'
+import { SELECTED_FILE_ACTIONS } from './selectedFile'
+import { Example, State } from './types'
 
 export enum EXAMPLES_ACTIONS {
   SELECT = 'EXAMPLES_SELECT',
@@ -18,7 +23,7 @@ export const examples: Reducer<Example[], ExamplesActions> = (state = initialSta
   }
 }
 
-export interface SelectExampleAction extends Action<EXAMPLES_ACTIONS.SELECT> {
+interface SelectExampleAction extends Action<EXAMPLES_ACTIONS.SELECT> {
   type: EXAMPLES_ACTIONS.SELECT
   example: Example
 }
@@ -28,6 +33,19 @@ interface EditExampleAction extends Action<EXAMPLES_ACTIONS.EDIT> {
   content: string
 }
 
+const initialState = packedExamples
+
 export type ExamplesActions = SelectExampleAction | EditExampleAction
 
-const initialState = packedExamples
+function* watchExampleSelected() {
+  yield takeEvery(EXAMPLES_ACTIONS.SELECT, function*(action: SelectExampleAction) {
+    dispatch({ type: SELECTED_FILE_ACTIONS.SELECT, file: action.example })
+    MonacoEditor.setEditorFile(action.example)
+    const state: State = yield select()
+    executeSelectedExample(state)
+  })
+}
+
+export function* examplesSagas() {
+  yield all([watchExampleSelected()])
+}

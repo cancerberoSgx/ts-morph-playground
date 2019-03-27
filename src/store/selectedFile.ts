@@ -1,11 +1,9 @@
 import { Action, Reducer } from 'redux'
-import { File, Example, Selection, State } from './types'
-import { packedExamples } from '../examples/packedExamples'
-import { all, call, put, select, takeEvery } from 'redux-saga/effects'
-import { FILES_ACTIONS, SelectFileAction } from './files'
+import { all, select, takeEvery } from 'redux-saga/effects'
 import { dispatch } from '..'
-import { EXAMPLES_ACTIONS, SelectExampleAction } from './examples'
-import { Editor, MonacoEditor } from '../components/editor'
+import { packedExamples } from '../examples/packedExamples'
+import { FILES_ACTIONS } from './files'
+import { File, Selection, State } from './types'
 
 export enum SELECTED_FILE_ACTIONS {
   SELECT = 'SELECTED_FILE_SELECT',
@@ -34,34 +32,37 @@ interface ChangeCursorSelectionAction extends Action<SELECTED_FILE_ACTIONS.CHANG
 
 export type SelectedFileActions = SelectedFileSelectAction | ChangeCursorSelectionAction
 
-function* watchFileSelected() {
-  yield takeEvery(FILES_ACTIONS.SELECT, function*(action: SelectFileAction) {
-    yield dispatchSelectedFile(action.file)
-  })
-}
-function* watchExampleSelected() {
-  yield takeEvery(EXAMPLES_ACTIONS.SELECT, function*(action: SelectExampleAction) {
-    yield dispatchSelectedFile(action.example)
-  })
-}
+//TODO: move to files
+// function* watchFileSelected() {
+//   yield takeEvery(FILES_ACTIONS.SELECT, function*(action: SelectFileAction) {
+//     yield dispatchSelectedFile(action.file)
+//     const state: State = yield select()
+
+//   })
+// }
+// function* watchExampleSelected() {
+//   yield takeEvery(EXAMPLES_ACTIONS.SELECT, function*(action: SelectExampleAction) {
+//     yield dispatchSelectedFile(action.example)
+//   })
+// }
 
 function* watchChangeCursorSelection() {
   yield takeEvery(SELECTED_FILE_ACTIONS.CHANGE_CURSOR_SELECTION, function*(action: ChangeCursorSelectionAction) {
     const state: State = yield select()
     const selected = state.files.find(f => f.filePath === state.selectedFile.filePath)
     if (selected) {
-      yield dispatch({ type: FILES_ACTIONS.EDIT, selection: action.selection })
+      dispatch({ type: FILES_ACTIONS.EDIT, selection: action.selection })
     }
   })
 }
 
-function dispatchSelectedFile(file: File) {
-  dispatch({ type: SELECTED_FILE_ACTIONS.SELECT, file })
-  MonacoEditor.setEditorFile(file)
-}
+// function dispatchSelectedFile(file: File) {
+//   dispatch({ type: SELECTED_FILE_ACTIONS.SELECT, file })
+//   MonacoEditor.setEditorFile(file)
+// }
 
 export function* selectedFileSagas() {
-  yield all([watchFileSelected(), watchExampleSelected(), watchChangeCursorSelection()])
+  yield all([watchChangeCursorSelection()])
 }
 
 const initialState = packedExamples.find(e => (e.selected = true)) || packedExamples[0]

@@ -41,13 +41,9 @@ export function executeSelectedExample(state: State) {
               .endsWith('prototype.execute')
         ) as BinaryExpression
         const executeMethodText = be.getRight().getText()
-        // debugger
         toEval = `${prefix}(${executeMethodText})`
         const f = eval(toEval)
         ex.execute = f.bind(ex)
-        // const selected = state.files.find(f => !!f.selected)
-        // const files  = selected ? [selected] : state.files
-        // console.log(files);
         result = ex.execute(state.files)
       } catch (ex) {
         result = {

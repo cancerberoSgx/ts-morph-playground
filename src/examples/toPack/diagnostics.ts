@@ -1,7 +1,7 @@
 import * as tsMorph from 'ts-morph'
 
 export default class implements PackedExample {
-  execute(files: state.File[]) {
+  execute(files: File[]) {
     const project = new tsMorph.Project()
     files.forEach(f => project.createSourceFile(f.filePath, f.content))
     const base = project.createSourceFile('base.ts', '')
@@ -45,12 +45,23 @@ ${e.text}
     }
   }
 
-  filePath = '/examples/diagnostics.ts'
+  filePath = '/src/examples/diagnostics.ts'
   name = 'Project Diagnostics'
   description = "Extract project's diagnostics information with positions compatible with monaco-editor"
   content = diagnostics_ts
 }
 
+interface File {
+  filePath: string
+  content: string
+  selected?: boolean
+  selection?: {
+    endColumn: number
+    endLineNumber: number
+    startColumn: number
+    startLineNumber: number
+  }
+}
+
 import { PackedExample } from '../packedExamples'
 import { diagnostics_ts } from '../packed/diagnostics_ts'
-import * as state from '../../store/types'

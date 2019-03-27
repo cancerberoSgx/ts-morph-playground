@@ -1,15 +1,13 @@
 import * as React from 'react'
 import * as ReactDom from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
+import { applyMiddleware, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import { all } from 'redux-saga/effects'
-import { AllActions } from './store/types'
-import { selectedFileSagas } from './store/selectedFile'
+import { ThemedApp } from './components/themedApp'
 import { initMonacoWorkers } from './monaco/initMonacoWorkers'
 import { reducers } from './store/reducers'
-import { ThemedApp } from './components/themedApp'
-import { layoutSagas } from './store/layout'
+import { rootSaga } from './store/rootSaga'
+import { AllActions } from './store/types'
 import './theme/global.css'
 
 initMonacoWorkers()
@@ -27,10 +25,6 @@ ReactDom.render(
   </Provider>,
   div
 )
-
-function* rootSaga() {
-  yield all([selectedFileSagas(), layoutSagas()])
-}
 
 sagaMiddleware.run(rootSaga)
 

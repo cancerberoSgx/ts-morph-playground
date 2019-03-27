@@ -27,10 +27,6 @@ export interface File {
 export interface Selection {
   endColumn: number
   endLineNumber: number
-  // positionColumn: number
-  // positionLineNumber: number
-  // selectionStartColumn: number
-  // selectionStartLineNumber: number
   startColumn: number
   startLineNumber: number
 }

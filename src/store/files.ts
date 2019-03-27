@@ -1,4 +1,8 @@
 import { Action, Reducer } from 'redux'
+import { all, takeEvery } from 'redux-saga/effects'
+import { dispatch } from '..'
+import { MonacoEditor } from '../components/editor'
+import { SELECTED_FILE_ACTIONS } from './selectedFile'
 import { File, Selection } from './types'
 
 export enum FILES_ACTIONS {
@@ -32,7 +36,7 @@ interface AddFileAction extends Action<FILES_ACTIONS.ADD> {
   type: FILES_ACTIONS.ADD
   file: File
 }
-export interface SelectFileAction extends Action<FILES_ACTIONS.SELECT> {
+interface SelectFileAction extends Action<FILES_ACTIONS.SELECT> {
   type: FILES_ACTIONS.SELECT
   file: File
 }
@@ -41,11 +45,12 @@ interface EditFileAction extends Action<FILES_ACTIONS.EDIT> {
   content?: string
   selection?: Selection
 }
+
 export type filesActions = AddFileAction | SelectFileAction | EditFileAction
 
 const initialState = [
   {
-    filePath: '/src/tool.ts',
+    filePath: '/src/sample/tool.ts',
     content: `
 interface Options {
   greeting: string
@@ -57,7 +62,7 @@ export function tool(options: Options) {
 `.trim()
   },
   {
-    filePath: '/src/main.ts',
+    filePath: '/src/sample/main.ts',
     content: `
 import {tool} from './tool'
 console.log(tool({
@@ -67,7 +72,7 @@ console.log(tool({
   `.trim()
   },
   {
-    filePath: '/src/ui/app.tsx',
+    filePath: '/src/sample/ui/app.tsx',
     content: `
 import * as React from 'react'
 export class App extends React.Component<{}, {}> {
@@ -78,3 +83,15 @@ export class App extends React.Component<{}, {}> {
   `.trim()
   }
 ]
+
+function* watchFileSelected() {
+  yield takeEvery(FILES_ACTIONS.SELECT, function*(action: SelectFileAction) {
+    dispatch({ type: SELECTED_FILE_ACTIONS.SELECT, file: action.file })
+    MonacoEditor.setEditorFile(action.file)
+    yield 1
+  })
+}
+
+export function* filesSagas() {
+  yield all([watchFileSelected()])
+}

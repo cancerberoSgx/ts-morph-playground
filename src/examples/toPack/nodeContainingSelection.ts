@@ -1,7 +1,7 @@
 import * as tsMorph from 'ts-morph'
 
 export default class implements PackedExample {
-  execute(files: state.File[]) {
+  execute(files: File[]) {
     const project = new tsMorph.Project()
     const text = files
       .filter(f => f.selection)
@@ -18,13 +18,15 @@ export default class implements PackedExample {
         `
 In file ${f.file.getFilePath()}, the ${f.selectedNode!.getKindName()} with text "${f
           .selectedNode!.getText()
-          .replace(/[\n\s]+/gm, ' ')} is the smaller node containing the selection ${JSON.stringify(f.selection)}"
+          .replace(/[\n\s]+/gm, ' ')}" is the smaller node containing the selection ${JSON.stringify(
+          f.selection
+        ).replace(/"/g, '')}"
     `.trim()
       )
       .join('\n\n')
     return { text }
 
-    function findDescendantIncludingPosition(n: tsMorph.Node, p: state.Selection): tsMorph.Node | undefined {
+    function findDescendantIncludingPosition(n: tsMorph.Node, p: Selection): tsMorph.Node | undefined {
       const d = findDescendant(n, d => nodeIncludesPosition(d, p))
       if (d) {
         let c: tsMorph.Node | undefined
@@ -41,7 +43,7 @@ In file ${f.file.getFilePath()}, the ${f.selectedNode!.getKindName()} with text 
       }
     }
 
-    function nodeIncludesPosition(n: tsMorph.Node, p: state.Selection) {
+    function nodeIncludesPosition(n: tsMorph.Node, p: Selection) {
       const r = getStartEndLineNumbersAndColumns(n)
       return (
         r.startColumn <= p.startColumn &&
@@ -74,13 +76,26 @@ In file ${f.file.getFilePath()}, the ${f.selectedNode!.getKindName()} with text 
     }
   }
 
-  filePath = '/examples/nodeContainingSelection.ts'
+  filePath = '/src/examples/nodeContainingSelection.ts'
   name = 'Node containing selection'
   description =
-    'Select text in sample files and it will return the smallest Node that contains the selection, on each file'
+    'Select some text in sample files and it will return the smallest node that contains the selection, on each file'
   content = nodeContainingSelection_ts
+}
+
+interface File {
+  filePath: string
+  content: string
+  selected?: boolean
+  selection?: Selection
+}
+
+interface Selection {
+  endColumn: number
+  endLineNumber: number
+  startColumn: number
+  startLineNumber: number
 }
 
 import { PackedExample } from '../packedExamples'
 import { nodeContainingSelection_ts } from '../packed/nodeContainingSelection_ts'
-import * as state from '../../store/types'

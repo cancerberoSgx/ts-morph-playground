@@ -15,6 +15,7 @@ import { Theme } from '../theme/theme'
 import withStyles, { WithSheet } from 'react-jss'
 import { throttle } from '../util/throttle'
 import { SELECTED_FILE_ACTIONS } from '../store/selectedFile'
+import { types_ts } from '../examples/types_ts'
 
 interface P extends WithSheet<typeof styles, Theme> {
   files: File[]
@@ -57,15 +58,10 @@ export class MonacoEditor extends React.Component<P, {}> {
       selection: {
         endColumn: e.selection.endColumn,
         endLineNumber: e.selection.endLineNumber,
-        // positionColumn: e.selection.positionColumn,
-        // positionLineNumber: e.selection.positionLineNumber,
-        // selectionStartColumn: e.selection.selectionStartColumn,
-        // selectionStartLineNumber: e.selection.selectionStartLineNumber,
         startColumn: e.selection.startColumn,
         startLineNumber: e.selection.startLineNumber
       }
     })
-    // console.log(e);
   }
 
   render() {
@@ -104,8 +100,9 @@ export class MonacoEditor extends React.Component<P, {}> {
     if (!containerEl) {
       return
     }
-    // monaco.languages.typescript.typescriptDefaults.addExtraLib(ts_morph_d_ts,   'file:///lib/ts-morph.d.ts')
     monaco.editor.createModel(ts_morph_d_ts, 'typescript', buildModelUrl('/lib/ts-morph.d.ts'))
+    monaco.editor.createModel(types_ts, 'typescript', buildModelUrl('/store/types.ts'))
+    // /src/sample/main.ts
     this.props.files.forEach(f => monaco.editor.createModel(f.content, 'typescript', buildModelUrl(f)))
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
       target: monaco.languages.typescript.ScriptTarget.ESNext,
