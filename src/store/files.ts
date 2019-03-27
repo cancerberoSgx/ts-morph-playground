@@ -9,7 +9,8 @@ export enum FILES_ACTIONS {
   ADD = 'FILES_ADD',
   EDIT = 'FILES_EDIT',
   REMOVE = 'FILES_REMOVE',
-  SELECT = 'FILES_SELECT'
+  SELECT = 'FILES_SELECT',
+  RESET = 'FILES_RESET'
 }
 
 export const files: Reducer<File[], filesActions> = (state = initialState, action) => {
@@ -28,6 +29,8 @@ export const files: Reducer<File[], filesActions> = (state = initialState, actio
           selection: typeof action.selection === 'undefined' ? selected.selection : action.selection
         }
       ]
+    case FILES_ACTIONS.RESET:
+      return [...action.files]
     default:
       return state
   }
@@ -45,8 +48,12 @@ interface EditFileAction extends Action<FILES_ACTIONS.EDIT> {
   content?: string
   selection?: Selection
 }
+interface ResetFilesAction extends Action<FILES_ACTIONS.RESET> {
+  type: FILES_ACTIONS.RESET
+  files: File[]
+}
 
-export type filesActions = AddFileAction | SelectFileAction | EditFileAction
+export type filesActions = AddFileAction | SelectFileAction | EditFileAction | ResetFilesAction
 
 const initialState = [
   {

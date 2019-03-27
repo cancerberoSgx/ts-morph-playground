@@ -4,6 +4,7 @@ import { OutputActions } from './output'
 import { SelectedFileActions } from './selectedFile'
 import { Theme } from '../theme/theme'
 import { LayoutActions } from './layout'
+import { RouterState, RouterAction, LocationChangeAction } from 'connected-react-router'
 
 export interface State {
   files: File[]
@@ -11,12 +12,19 @@ export interface State {
   selectedFile: File
   output: Output
   layout: Layout
+  router: RouterState
 }
 
 export interface Layout {
   theme: Theme
   themes: Theme[]
 }
+// export type Route = 'home'
+// export interface Route {
+//   // routes: Route
+//   currentPage: string
+//   params: {[p:string]:JSONValue}
+// }
 
 export interface File {
   filePath: string
@@ -39,4 +47,11 @@ export interface Example extends File {
   description: string
 }
 
-export type AllActions = filesActions | ExamplesActions | OutputActions | SelectedFileActions | LayoutActions
+export type AllActions =
+  | filesActions
+  | ExamplesActions
+  | OutputActions
+  | SelectedFileActions
+  | LayoutActions
+  | LocationChangeAction
+  | RouterAction

@@ -1,7 +1,7 @@
 import * as monaco from 'monaco-editor'
 import * as ts from 'typescript'
-import { notUndefined } from '../util/misc'
 import { buildModelUrl } from './monaco'
+import { notUndefined } from 'misc-utils-of-mine-typescript'
 
 export interface ITypeScriptWorker {
   getCompilationSettings(): ts.CompilerOptions

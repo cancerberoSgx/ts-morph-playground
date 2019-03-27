@@ -9,7 +9,8 @@ import { Example, State } from './types'
 
 export enum EXAMPLES_ACTIONS {
   SELECT = 'EXAMPLES_SELECT',
-  EDIT = 'EXAMPLES_EDIT'
+  EDIT = 'EXAMPLES_EDIT',
+  RESET = 'EXAMPLES_ACTIONS_RESET'
 }
 
 export const examples: Reducer<Example[], ExamplesActions> = (state = initialState, action) => {
@@ -18,6 +19,8 @@ export const examples: Reducer<Example[], ExamplesActions> = (state = initialSta
       return [...state.map(e => ({ ...e, selected: e.filePath === action.example.filePath }))]
     case EXAMPLES_ACTIONS.EDIT:
       return [...state.map(f => ({ ...f, content: f.selected ? action.content : f.content }))]
+    case EXAMPLES_ACTIONS.RESET:
+      return [...action.examples]
     default:
       return state
   }
@@ -32,10 +35,14 @@ interface EditExampleAction extends Action<EXAMPLES_ACTIONS.EDIT> {
   type: EXAMPLES_ACTIONS.EDIT
   content: string
 }
+interface ResetExamplesAction extends Action<EXAMPLES_ACTIONS.RESET> {
+  type: EXAMPLES_ACTIONS.RESET
+  examples: Example[]
+}
 
 const initialState = packedExamples
 
-export type ExamplesActions = SelectExampleAction | EditExampleAction
+export type ExamplesActions = SelectExampleAction | EditExampleAction | ResetExamplesAction
 
 function* watchExampleSelected() {
   yield takeEvery(EXAMPLES_ACTIONS.SELECT, function*(action: SelectExampleAction) {
