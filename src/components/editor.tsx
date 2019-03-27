@@ -7,6 +7,8 @@ import { EXAMPLES_ACTIONS } from '../store/examples'
 import { dispatch } from '..'
 import { FILES_ACTIONS } from '../store/files'
 import { ts_morph_d_ts } from '../examples/ts_morph_d_ts';
+import { install } from '../monaco/navigateExternalDefinitions';
+import { buildModelUrl } from '../monaco/monaco';
 
 interface P {
   files: File[]
@@ -18,15 +20,8 @@ class MonacoEditor extends React.Component<P, {}> {
   static editor: monaco.editor.IStandaloneCodeEditor | undefined
 
   static setEditorFile(file: File) {
-    if (!file) {
-      debugger
-    }
-    const model = monaco.editor.getModels().find(m => m.uri.toString() === MonacoEditor.buildModelUrl(file))
+    const model = monaco.editor.getModels().find(m => m.uri.path === file.filePath)
     MonacoEditor.editor!.setModel(model!)
-  }
-
-  private static buildModelUrl(f: File|string): string {
-    return `file://${typeof f==='string' ? f : f.filePath}`
   }
 
   private containerEl: React.RefObject<HTMLDivElement>
@@ -51,7 +46,10 @@ class MonacoEditor extends React.Component<P, {}> {
 
   private modelChanged() {
     const model = MonacoEditor.editor!.getModel()!
-    if (model.uri.path.includes('src/')) {
+    if(model.uri.path==='/lib/ts-morph.d.ts'){
+      return
+    }
+    if (model.uri.path.startsWith('/src/')) {
       dispatch({
         type: FILES_ACTIONS.EDIT,
         content: model.getValue()
@@ -66,21 +64,22 @@ class MonacoEditor extends React.Component<P, {}> {
 
   protected installEditor() {
     if (MonacoEditor.editor) {
-      const models = monaco.editor.getModels().map(m => m.uri.toString())
+      const models = monaco.editor.getModels().map(m => m.uri.path)
       this.props.files
-      .filter(f => !models.includes(MonacoEditor.buildModelUrl(f)))
+      .filter(f => !models.includes(f.filePath))
       .forEach(f => {
-        monaco.editor.createModel(f.content, 'typescript', monaco.Uri.parse(`file://${f.filePath}`))
+        monaco.editor.createModel(f.content, 'typescript', buildModelUrl(f))
       })
       return
     }
     const containerEl = this.containerEl.current
     if (!containerEl) {
       return
-    }
-    monaco.languages.typescript.typescriptDefaults.addExtraLib(ts_morph_d_ts,   'lib/ts-morph.d.ts')
+    }    
+    // monaco.languages.typescript.typescriptDefaults.addExtraLib(ts_morph_d_ts,   'file:///lib/ts-morph.d.ts')
+    monaco.editor.createModel(ts_morph_d_ts, 'typescript', buildModelUrl('/lib/ts-morph.d.ts'))
     this.props.files.forEach(f =>
-      monaco.editor.createModel(f.content, 'typescript', monaco.Uri.parse(MonacoEditor.buildModelUrl(f)))
+      monaco.editor.createModel(f.content, 'typescript', buildModelUrl(f))
     )
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
       target: monaco.languages.typescript.ScriptTarget.ES2018,
@@ -90,14 +89,14 @@ class MonacoEditor extends React.Component<P, {}> {
       noEmit: true,
       baseUrl: '.',
       paths: {
-        'ts-morph': ['lib/ts-morph']
+        'ts-morph': ['file:///lib/ts-morph']
       },
       jsx: monaco.languages.typescript.JsxEmit.React
     })
     MonacoEditor.editor = monaco.editor.create(containerEl, {
       model: monaco.editor
         .getModels()
-        .find(m => m.uri.toString() === MonacoEditor.buildModelUrl(this.props.selectedFile)),
+        .find(m => m.uri.path ===this.props.selectedFile.filePath),
       language: 'typescript',
       wordWrap: 'on',
       lineNumbers: isDesktop() ? 'on' : 'off',
@@ -108,6 +107,11 @@ class MonacoEditor extends React.Component<P, {}> {
         : {
             enabled: false
           }
+    })
+    install(MonacoEditor.editor!, (editor, model, def)=>{
+      editor.setModel(model)
+      editor.revealPositionInCenter({ column: def.range.startColumn, lineNumber: def.range.startLineNumber })
+      editor.setSelection(def.range)
     })
   }
 }

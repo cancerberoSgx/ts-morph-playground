@@ -3,10 +3,10 @@ export function initMonacoWorkers() {
     (self as any).MonacoEnvironment = {
       getWorkerUrl(moduleId: any, label: any) {
         if (label === 'typescript' || label === 'javascript') {
-          return './ts.worker.js'
+          return './ts.worker.js';
         }
-        return './editor.worker.js'
+        return './editor.worker.js';
       }
-    }
+    };
   }
 }

@@ -6,7 +6,7 @@ import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
 import { AllActions } from './store/types'
 import { selectedFileSagas } from './store/selectedFile'
-import { initMonacoWorkers } from './util/monaco'
+import { initMonacoWorkers } from "./monaco/initMonacoWorkers";
 import { reducers } from './store/reducers'
 import { ThemedApp } from './themedApp'
 import { layoutSagas } from './store/layout'

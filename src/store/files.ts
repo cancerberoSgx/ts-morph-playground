@@ -36,7 +36,7 @@ export type filesActions = AddFileAction | SelectFileAction | EditFileAction
 
 const initialState = [
   {
-    filePath: 'src/tool.ts',
+    filePath: '/src/tool.ts',
     content: `
 interface Options {
   greeting: string
@@ -48,7 +48,7 @@ export function tool(options: Options) {
 `.trim()
   },
   {
-    filePath: 'src/main.ts',
+    filePath: '/src/main.ts',
     content: `
 import {tool} from './tool'
 console.log(tool({
@@ -59,7 +59,7 @@ console.log(tool({
   }
   ,
   {
-    filePath: 'src/ui/app.tsx',
+    filePath: '/src/ui/app.tsx',
     content: `
 import * as React from 'react'
 export class App extends React.Component<{}, {}> {

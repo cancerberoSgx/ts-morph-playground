@@ -28,7 +28,7 @@ class Files_ extends React.Component<P, {}> {
     dispatch({
       type: FILES_ACTIONS.ADD,
       file: {
-        filePath: `src/${this.props.files.length}_test.ts`,
+        filePath: `/src/${this.props.files.length}_test.ts`,
         content: 'export const c = 1'
       }
     })
