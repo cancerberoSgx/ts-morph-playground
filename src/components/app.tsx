@@ -2,7 +2,7 @@ import * as React from 'react'
 import withStyles, { WithSheet } from 'react-jss'
 import { connect } from 'react-redux'
 import { dispatch } from '..'
-import { executeSelectedExample } from '../util/executeSelectedExample'
+import { executeSelectedExample } from '../store/dispatch/executeSelectedExample'
 import { LAYOUT_ACTIONS } from '../store/layout'
 import { State } from '../store/types'
 import { Theme } from '../theme/theme'
@@ -13,20 +13,45 @@ import { Files } from './files'
 import { Output } from './output'
 import { ForkRibbon } from './forkRibbon'
 import { RouteComponentProps, Route } from 'react-router'
-import { push } from 'connected-react-router'
-import { stateToString } from '../util/serializeState'
 import { Link } from 'react-router-dom'
+import { stateToString } from '../store/dispatch/getStateFromLocation'
 
 interface P extends WithSheet<typeof styles, Theme>, RouteComponentProps<any> {
   state: State
 }
 
-export function randomIntBetween(a: number, b: number) {
-  return Math.floor(Math.random() * b) + a
-}
+// export function randomIntBetween(a: number, b: number) {
+//   return Math.floor(Math.random() * b) + a
+// }
 class App_ extends React.Component<P, {}> {
+  //   componentWillUpdate(){
+  //     if(this.props.match.params.state) {
+  //  // ender={(props: RouteComponentProps<{state:string}>) => {
+  //       //reset state by calling actions example.
+  //       let state: State|undefined
+  //       try {
+  //         state = stringToState(this.props.match.params.state)
+  //       } catch (error) {
+  //         console.error('Error loading state from url ', error, error.stack);
+  //         debugger
+  //       }
+  //       dispatch(push('/'))
+  //       if(state){
+  //         // dispatch({type: EXAMPLES_ACTIONS.RESET, ...state})
+  //         // dispatch({type: FILES_ACTIONS.RESET, ...state})
+  //         console.log('reset state by calling RESET actions done');
+  //       // return <div>loading state from url param</div>
+
+  //       }
+  //       // return <div>cleaning state url param</div>
+  //       // return <App {...this.props as any} />
+
+  //     }
+
+  //     }
+
   render() {
-    console.log('App', this.props.match)
+    // console.log('App', this.props.match)
     const { classes, state } = this.props
     return (
       <article className={classes.root}>
@@ -36,18 +61,21 @@ class App_ extends React.Component<P, {}> {
         {/* <Route path="/topics" component={Topics} /> */}
 
         <h1>ts-morph examples in the browser</h1>
-        <select
-          className={classes.selectTheme}
-          onChange={e =>
-            dispatch({
-              type: LAYOUT_ACTIONS.CHANGE_THEME,
-              theme: state.layout.themes.find(t => t.name === e.currentTarget.value)!
-            })
-          }>
-          {state.layout.themes.map(t => (
-            <option key={t.name}>{t.name}</option>
-          ))}
-        </select>
+        <div className={classes.selectTheme}>
+          <select
+            onChange={e =>
+              dispatch({
+                type: LAYOUT_ACTIONS.CHANGE_THEME,
+                theme: state.layout.themes.find(t => t.name === e.currentTarget.value)!
+              })
+            }>
+            {state.layout.themes.map(t => (
+              <option key={t.name}>{t.name}</option>
+            ))}
+          </select>
+          <Link to={'/state/' + stateToString(state)}>Current Example State as Url</Link>
+        </div>
+
         {/* <button className={classes.selectTheme}
           onClick={e =>{
             const hash = this.props.match.url+'&fo'+randomIntBetween(2,22)+'='+randomIntBetween(2,22)
@@ -55,8 +83,9 @@ class App_ extends React.Component<P, {}> {
             dispatch(push(hash))
           }
           }>generate url{JSON.stringify(this.props.match.params||{})}</button> */}
-        {/* <Link to={'/state/'+stateToString(state)}>state url</Link><br/>
-          <a href={this.props.match.path+'#/state/'+stateToString(state)}>state url</a> */}
+        <Link to={'/state/' + stateToString(state)}>state url</Link>
+        <br />
+        {/* <a href={this.props.match.path+'#/state/'+stateToString(state)}>state url</a> */}
 
         <div className={classes.wrapper}>
           <div className={classes.examples}>

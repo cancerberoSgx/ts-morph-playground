@@ -3,7 +3,7 @@ import { all, select, takeEvery } from 'redux-saga/effects'
 import { dispatch } from '..'
 import { MonacoEditor } from '../components/editor'
 import { packedExamples } from '../examples/packedExamples'
-import { executeSelectedExample } from '../util/executeSelectedExample'
+import { executeSelectedExample } from './dispatch/executeSelectedExample'
 import { SELECTED_FILE_ACTIONS } from './selectedFile'
 import { Example, State } from './types'
 

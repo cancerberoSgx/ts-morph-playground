@@ -26,7 +26,9 @@
   "author": "Sebastian Gurin",
   "license": "MIT",
   "dependencies": {
+    "@types/js-base64": "^2.3.1",
     "connected-react-router": "^6.3.2",
+    "js-base64": "^2.5.1",
     "misc-utils-of-mine-typescript": "0.0.12",
     "monaco-editor": "^0.16.0",
     "react": "^16.8.3",

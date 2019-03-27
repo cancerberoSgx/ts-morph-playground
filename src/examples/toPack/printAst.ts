@@ -4,7 +4,7 @@ export default class implements PackedExample {
   execute(files: File[]) {
     const project = new tsMorph.Project()
     const text = files
-      .filter(f => files.find(f => !!f.selected) && f.selected)
+      .filter(f => (files.find(f => !!f.selected) ? f.selected : true))
       .map(f => project.createSourceFile(f.filePath, f.content))
       .map(f => ({ name: f.getFilePath(), ast: printAst(f, 0) }))
       .map(

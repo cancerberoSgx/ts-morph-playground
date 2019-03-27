@@ -18,6 +18,7 @@ export interface State {
 export interface Layout {
   theme: Theme
   themes: Theme[]
+  stateUrlParam?: string
 }
 // export type Route = 'home'
 // export interface Route {
