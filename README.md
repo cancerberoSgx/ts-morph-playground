@@ -1,3 +1,3 @@
-# ts-morph browser example
+# ts-morph-playground
 
-an example of ts-morph library working in the browser
+ts-morph example gallery and playground application 100% in the browser

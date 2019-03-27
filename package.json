@@ -1,7 +1,7 @@
 {
-  "name": "ts-morph-browser-example",
+  "name": "ts-morph-playground",
   "version": "0.0.1",
-  "description": "extra utilities for ts-simple-ast ",
+  "description": "ts-morph example gallery and playground application 100% in the browser",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
   "scripts": {
