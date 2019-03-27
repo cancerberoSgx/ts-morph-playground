@@ -12,11 +12,12 @@ class Examples_ extends React.Component<P, {}> {
   render() {
     return (
       <article className="examples">
-        <h2>Examples</h2>
+        <h3>ts-morph examples</h3>
         <ul>
           {this.props.examples.map(example => (
             <li className={`example ${example.selected ? 'selected' : ''}`} key={example.name}>
-              <a onClick={e => dispatch({ type: EXAMPLES_ACTIONS.SELECT, example })}>{example.name}</a>
+              <a onClick={e => dispatch({ type: EXAMPLES_ACTIONS.SELECT, example })}>{example.name}</a> (
+              {example.description})
             </li>
           ))}
         </ul>

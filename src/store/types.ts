@@ -1,13 +1,21 @@
 import { filesActions } from './files'
 import { ExamplesActions } from './examples'
 import { OutputActions } from './output'
+import { SelectedFileActions } from './selectedFile'
+import { Theme } from '../theme/theme'
+import { LayoutActions } from './layout'
 
 export interface State {
   files: File[]
   examples: Example[]
-  output?: Output
+  selectedFile: File
+  output: Output
+  layout: Layout
 }
-
+export interface Layout {
+  theme: Theme
+  themes: Theme[]
+}
 export interface File {
   filePath: string
   content: string
@@ -19,6 +27,7 @@ export interface Output {
 }
 export interface Example extends File {
   name: string
+  description: string
 }
 
-export type AllActions = filesActions | ExamplesActions | OutputActions
+export type AllActions = filesActions | ExamplesActions | OutputActions | SelectedFileActions | LayoutActions

@@ -12,7 +12,7 @@ class Files_ extends React.Component<P, {}> {
   render() {
     return (
       <article className="files">
-        <h3>Sample project files</h3>
+        <h3>Sample input files</h3>
         <button onClick={e => this.add()}>Add</button>
         <ul>
           {this.props.files.map(f => (

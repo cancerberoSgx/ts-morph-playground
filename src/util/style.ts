@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 export function width() {
   return document.body.clientWidth
 }

@@ -1,6 +1,8 @@
 CACHE MANIFEST
 # Created at 2019-04-23T01:46:30.719Z
 index.html
+editor.worker.js
+ts.worker.js
 src.f69400ca.js
 src.f69400ca.map
 src.f69400ca.css

@@ -18,7 +18,7 @@ export const examples: Reducer<Example[], ExamplesActions> = (state = initialSta
   }
 }
 
-interface SelectExampleAction extends Action<EXAMPLES_ACTIONS.SELECT> {
+export interface SelectExampleAction extends Action<EXAMPLES_ACTIONS.SELECT> {
   type: EXAMPLES_ACTIONS.SELECT
   example: Example
 }

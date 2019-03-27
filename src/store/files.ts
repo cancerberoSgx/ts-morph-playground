@@ -25,7 +25,7 @@ interface AddFileAction extends Action<FILES_ACTIONS.ADD> {
   type: FILES_ACTIONS.ADD
   file: File
 }
-interface SelectFileAction extends Action<FILES_ACTIONS.SELECT> {
+export interface SelectFileAction extends Action<FILES_ACTIONS.SELECT> {
   type: FILES_ACTIONS.SELECT
   file: File
 }
@@ -37,7 +37,7 @@ export type filesActions = AddFileAction | SelectFileAction | EditFileAction
 
 const initialState = [
   {
-    filePath: 'tool.ts',
+    filePath: 'src/tool.ts',
     content: `
 interface Options {
   greeting: string
@@ -49,7 +49,7 @@ export function tool(options: Options) {
 `.trim()
   },
   {
-    filePath: 'main.ts',
+    filePath: 'src/main.ts',
     content: `
 import {tool} from './tool'
 console.log(tool({

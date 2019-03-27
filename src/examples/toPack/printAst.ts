@@ -48,4 +48,5 @@ export default class implements PackedExample {
   name = 'print AST'
   description = 'Prints a textual AST representation of selected file or all of none selected'
   content = printAst_ts
+  selected = false
 }
