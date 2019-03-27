@@ -1,6 +1,6 @@
-import { filesActions } from './files';
-import { ExamplesActions } from './examples';
-import { OutputActions } from './output';
+import { filesActions } from './files'
+import { ExamplesActions } from './examples'
+import { OutputActions } from './output'
 
 export interface State {
   files: File[]
@@ -21,4 +21,4 @@ export interface Example extends File {
   name: string
 }
 
-export type AllActions = filesActions|ExamplesActions|OutputActions
+export type AllActions = filesActions | ExamplesActions | OutputActions

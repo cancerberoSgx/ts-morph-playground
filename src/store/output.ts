@@ -1,17 +1,14 @@
-import { Action, Reducer } from 'redux';
-import { Output } from './types';
+import { Action, Reducer } from 'redux'
+import { Output } from './types'
 
 export enum OUTPUT_ACTIONS {
-  SET = 'OUTPUT_SET',
+  SET = 'OUTPUT_SET'
 }
 
-export const output: Reducer<Output, OutputActions> = (
-  state = initialState,
-  action,
-) => {
+export const output: Reducer<Output, OutputActions> = (state = initialState, action) => {
   switch (action.type) {
     case OUTPUT_ACTIONS.SET:
-      return {...state, ...action.output}
+      return { ...state, ...action.output }
     default:
       return state
   }

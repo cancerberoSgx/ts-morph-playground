@@ -1,24 +1,21 @@
 import { Action, Reducer } from 'redux'
-import { File } from './types';
+import { File } from './types'
 
 export enum FILES_ACTIONS {
   ADD = 'FILES_ADD',
   EDIT = 'FILES_EDIT',
   REMOVE = 'FILES_REMOVE',
-  SELECT = 'FILES_SELECT',
+  SELECT = 'FILES_SELECT'
 }
 
-export const files: Reducer<File[], filesActions> = (
-  state = initialState,
-  action,
-) => {
+export const files: Reducer<File[], filesActions> = (state = initialState, action) => {
   switch (action.type) {
     case FILES_ACTIONS.ADD:
       return [...state, action.file]
     case FILES_ACTIONS.SELECT:
       return [...state.map(f => ({ ...f, selected: f.filePath === action.file.filePath }))]
-      case FILES_ACTIONS.EDIT:
-        return [...state.map(f => ({ ...f, content: f.selected ? action.content : f.content}))]
+    case FILES_ACTIONS.EDIT:
+      return [...state.map(f => ({ ...f, content: f.selected ? action.content : f.content }))]
     default:
       return state
   }
@@ -36,9 +33,10 @@ interface EditFileAction extends Action<FILES_ACTIONS.EDIT> {
   type: FILES_ACTIONS.EDIT
   content: string
 }
-export type filesActions = AddFileAction | SelectFileAction|EditFileAction
+export type filesActions = AddFileAction | SelectFileAction | EditFileAction
 
-const initialState = [  {
+const initialState = [
+  {
     filePath: 'tool.ts',
     content: `
 interface Options {

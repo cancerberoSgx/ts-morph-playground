@@ -2,8 +2,7 @@
   "name": "ts-morph-playground",
   "version": "0.0.1",
   "description": "ts-morph example gallery and playground application 100% in the browser",
-  "main": "dist/src/index.js",
-  "typings": "dist/src/index.d.ts",
+  "private": true,
   "scripts": {
     "build": "npm run clean && npx tsc && npx parcel build src/index.html -d docs --no-content-hash --detailed-report --public-url './' && npm run copy",
     "build-local": "npm run build && gzip docs/*.* && npx http-server docs --gzip",
@@ -18,7 +17,8 @@
     "TypeScript Language Service",
     "ts-morph",
     "ts-simple-ast",
-    "ts-query"
+    "ts-query",
+    "playground"
   ],
   "author": "Sebastian Gurin",
   "license": "MIT",
@@ -27,7 +27,6 @@
     "react": "^16.8.3",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
-    "redux-saga": "^1.0.2",
     "react-dom": "^16.8.3"
   },
   "devDependencies": {
@@ -41,5 +40,5 @@
     "typescript": "^3.3.3333",
     "typescript-poor-man-reflection": "0.0.5"
   },
-  "repository": "https://github.com/cancerberoSgx/ts-morph-browser-example"
+  "repository": "https://github.com/cancerberoSgx/ts-morph-playground"
 }

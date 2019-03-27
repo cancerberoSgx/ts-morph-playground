@@ -1,29 +1,37 @@
-import * as React from 'react';
-import { File, State } from '../store/types';
-import { connect } from 'react-redux';
-import { dispatch } from '..';
-import { FILES_ACTIONS } from '../store/files';
+import * as React from 'react'
+import { File, State } from '../store/types'
+import { connect } from 'react-redux'
+import { dispatch } from '..'
+import { FILES_ACTIONS } from '../store/files'
 
-interface P { files: File[] }
+interface P {
+  files: File[]
+}
 
 class Files_ extends React.Component<P, {}> {
   render() {
-    return <article className="files">
-    <h3>Sample project files</h3>
-      <button onClick={e=>this.add()}>Add</button>
-      <ul>
-        {this.props.files.map(f=>
-        <li className={`file ${f.selected ? 'selected' : ''}`} key={f.filePath}>
-          <a onClick={e=>dispatch({type: FILES_ACTIONS.SELECT, file: f})}>{f.filePath}</a>
-        </li>)}
-      </ul>
-    </article>
+    return (
+      <article className="files">
+        <h3>Sample project files</h3>
+        <button onClick={e => this.add()}>Add</button>
+        <ul>
+          {this.props.files.map(f => (
+            <li className={`file ${f.selected ? 'selected' : ''}`} key={f.filePath}>
+              <a onClick={e => dispatch({ type: FILES_ACTIONS.SELECT, file: f })}>{f.filePath}</a>
+            </li>
+          ))}
+        </ul>
+      </article>
+    )
   }
   add(): void {
-   dispatch({type: FILES_ACTIONS.ADD, file: {
-    filePath: this.props.files.length+'_test.ts', 
-    content: 'export const c = 1'
-  }})
+    dispatch({
+      type: FILES_ACTIONS.ADD,
+      file: {
+        filePath: this.props.files.length + '_test.ts',
+        content: 'export const c = 1'
+      }
+    })
   }
 }
 
