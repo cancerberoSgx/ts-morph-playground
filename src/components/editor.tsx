@@ -14,7 +14,6 @@ import { Theme } from '../theme/theme'
 import withStyles, { WithSheet } from 'react-jss'
 import { throttle } from '../util/throttle'
 import { SELECTED_FILE_ACTIONS } from '../store/selectedFile'
-import { types_ts } from '../examples/types_ts'
 
 interface P extends WithSheet<typeof styles, Theme> {
   files: File[]
@@ -100,7 +99,7 @@ export class MonacoEditor extends React.Component<P, {}> {
       return
     }
     monaco.editor.createModel(ts_morph_d_ts, 'typescript', buildModelUrl('/lib/ts-morph.d.ts'))
-    monaco.editor.createModel(types_ts, 'typescript', buildModelUrl('/store/types.ts'))
+    // monaco.editor.createModel(types_ts, 'typescript', buildModelUrl('/store/types.ts'))
     this.props.files.forEach(f => monaco.editor.createModel(f.content, 'typescript', buildModelUrl(f)))
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
       target: monaco.languages.typescript.ScriptTarget.ESNext,
@@ -136,14 +135,12 @@ export class MonacoEditor extends React.Component<P, {}> {
   }
 }
 
-const styles = (theme: Theme) =>
-  // createStyles
-  ({
-    editor: {
-      width: '100%',
-      height: '500px'
-    }
-  })
+const styles = (theme: Theme) => ({
+  editor: {
+    width: '100%',
+    height: '500px'
+  }
+})
 
 export const Editor = withStyles(styles)(
   connect((state: State) => ({

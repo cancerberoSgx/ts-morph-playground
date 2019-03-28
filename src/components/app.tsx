@@ -56,19 +56,7 @@ const styles = (theme: Theme) => ({
     backgroundColor: theme.backgroundColor,
     color: theme.foregroundColor,
     margin: 0,
-    padding: '1em',
-    '@global': {
-      '*': {
-        backgroundColor: theme.backgroundColor,
-        color: theme.foregroundColor
-      },
-      ul: {
-        paddingTop: 0,
-        paddingBottom: 0,
-        marginBottom: 0,
-        marginTop: 0
-      }
-    }
+    padding: '0.3em 1em'
   },
   wrapper: {
     display: 'grid',
