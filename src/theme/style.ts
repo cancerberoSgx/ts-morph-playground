@@ -1,17 +1,22 @@
-import { Styles } from 'react-jss'
 import { Theme } from './theme'
-/** auxiliary function to type check CSS Properties */
-export function createStyles<C extends string = string>(styles: { [c: string]: React.CSSProperties }): Styles<C> {
-  return styles as Styles<C>
-}
 
-export const commonStyles = (theme: Theme) =>
-  createStyles({
+export const commonStyles = (theme: Theme) => ({
+  '@global': {
     button: {
       color: theme.colorPrimary
     },
     textarea: {
       backgroundColor: theme.backgroundColor,
-      color: theme.foregroundColor
+      color: theme.foregroundColor,
+      padding: 0,
+      border: 0
+    },
+    a: {
+      cursor: 'pointer',
+      color: theme.colorPrimary
+    },
+    'a:hover': {
+      textDecoration: 'underline'
     }
-  })
+  }
+})

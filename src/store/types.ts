@@ -20,12 +20,6 @@ export interface Layout {
   themes: Theme[]
   stateUrlParam?: string
 }
-// export type Route = 'home'
-// export interface Route {
-//   // routes: Route
-//   currentPage: string
-//   params: {[p:string]:JSONValue}
-// }
 
 export interface File {
   filePath: string
@@ -33,6 +27,7 @@ export interface File {
   selected?: boolean
   selection?: Selection
 }
+
 export interface Selection {
   endColumn: number
   endLineNumber: number
@@ -43,6 +38,7 @@ export interface Selection {
 export interface Output {
   text?: string
 }
+
 export interface Example extends File {
   name: string
   description: string

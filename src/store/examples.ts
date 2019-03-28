@@ -35,6 +35,7 @@ interface EditExampleAction extends Action<EXAMPLES_ACTIONS.EDIT> {
   type: EXAMPLES_ACTIONS.EDIT
   content: string
 }
+
 interface ResetExamplesAction extends Action<EXAMPLES_ACTIONS.RESET> {
   type: EXAMPLES_ACTIONS.RESET
   examples: Example[]

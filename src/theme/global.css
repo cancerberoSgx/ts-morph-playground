@@ -1,10 +1,17 @@
-a {
-  cursor: pointer;
-  text-decoration: underline;
-}
+/* TODO move to style.ts */
+
 .selected a {
   font-weight: bolder;
 }
 body {
-  margin: 0
+  margin: 0;
+  color: 0;
+  background-color: 0;
+}
+
+[data-icon]:before {
+  font-family: icons; /* BYO icon font, mapped smartly */
+  content: attr(data-icon);
+  font-size: 2em;
+  speak: none; /* Not to be trusted, but hey. */
 }

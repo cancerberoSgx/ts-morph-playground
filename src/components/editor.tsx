@@ -10,7 +10,6 @@ import { ts_morph_d_ts } from '../examples/ts_morph_d_ts'
 import { install } from '../monaco/navigateExternalDefinitions'
 import { buildModelUrl } from '../monaco/monaco'
 import { packedExamples } from '../examples/packedExamples'
-import { createStyles } from '../theme/style'
 import { Theme } from '../theme/theme'
 import withStyles, { WithSheet } from 'react-jss'
 import { throttle } from '../util/throttle'
@@ -102,7 +101,6 @@ export class MonacoEditor extends React.Component<P, {}> {
     }
     monaco.editor.createModel(ts_morph_d_ts, 'typescript', buildModelUrl('/lib/ts-morph.d.ts'))
     monaco.editor.createModel(types_ts, 'typescript', buildModelUrl('/store/types.ts'))
-    // /src/sample/main.ts
     this.props.files.forEach(f => monaco.editor.createModel(f.content, 'typescript', buildModelUrl(f)))
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
       target: monaco.languages.typescript.ScriptTarget.ESNext,
@@ -139,7 +137,8 @@ export class MonacoEditor extends React.Component<P, {}> {
 }
 
 const styles = (theme: Theme) =>
-  createStyles({
+  // createStyles
+  ({
     editor: {
       width: '100%',
       height: '500px'

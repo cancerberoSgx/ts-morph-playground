@@ -32,20 +32,6 @@ interface ChangeCursorSelectionAction extends Action<SELECTED_FILE_ACTIONS.CHANG
 
 export type SelectedFileActions = SelectedFileSelectAction | ChangeCursorSelectionAction
 
-//TODO: move to files
-// function* watchFileSelected() {
-//   yield takeEvery(FILES_ACTIONS.SELECT, function*(action: SelectFileAction) {
-//     yield dispatchSelectedFile(action.file)
-//     const state: State = yield select()
-
-//   })
-// }
-// function* watchExampleSelected() {
-//   yield takeEvery(EXAMPLES_ACTIONS.SELECT, function*(action: SelectExampleAction) {
-//     yield dispatchSelectedFile(action.example)
-//   })
-// }
-
 function* watchChangeCursorSelection() {
   yield takeEvery(SELECTED_FILE_ACTIONS.CHANGE_CURSOR_SELECTION, function*(action: ChangeCursorSelectionAction) {
     const state: State = yield select()
@@ -55,11 +41,6 @@ function* watchChangeCursorSelection() {
     }
   })
 }
-
-// function dispatchSelectedFile(file: File) {
-//   dispatch({ type: SELECTED_FILE_ACTIONS.SELECT, file })
-//   MonacoEditor.setEditorFile(file)
-// }
 
 export function* selectedFileSagas() {
   yield all([watchChangeCursorSelection()])

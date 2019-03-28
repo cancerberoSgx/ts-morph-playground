@@ -35,19 +35,23 @@ export const files: Reducer<File[], filesActions> = (state = initialState, actio
       return state
   }
 }
+
 interface AddFileAction extends Action<FILES_ACTIONS.ADD> {
   type: FILES_ACTIONS.ADD
   file: File
 }
+
 interface SelectFileAction extends Action<FILES_ACTIONS.SELECT> {
   type: FILES_ACTIONS.SELECT
   file: File
 }
+
 interface EditFileAction extends Action<FILES_ACTIONS.EDIT> {
   type: FILES_ACTIONS.EDIT
   content?: string
   selection?: Selection
 }
+
 interface ResetFilesAction extends Action<FILES_ACTIONS.RESET> {
   type: FILES_ACTIONS.RESET
   files: File[]

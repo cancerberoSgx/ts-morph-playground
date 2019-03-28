@@ -6,12 +6,9 @@ import { OUTPUT_ACTIONS } from '../output'
 import { Output, State } from '../types'
 import { ModuleKind, JsxEmit } from 'typescript'
 
-// TODO: move to saga
-// TODO: before exec, if editor has a sample, then change it to selected example first and then exec
 export function executeSelectedExample(state: State) {
   const stateExample = state.examples.find(e => !!e.selected)
   if (stateExample) {
-    // dispatch({ type: EXAMPLES_ACTIONS.SELECT, example: stateExample })
     const ex = packedExamples.find(e => e.filePath === stateExample.filePath)
     if (ex) {
       // HEADS UP : ugly hack : we emit the example content and then replace the execute method.

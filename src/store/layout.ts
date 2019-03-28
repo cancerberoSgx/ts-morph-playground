@@ -5,13 +5,13 @@ import { darkTheme } from '../theme/darkTheme'
 import { lightTheme } from '../theme/lightTheme'
 import { Theme } from '../theme/theme'
 import { Layout, State } from './types'
-import {
-  routerActions,
-  RouterAction,
-  LOCATION_CHANGE,
-  LocationChangeAction,
-  CALL_HISTORY_METHOD
-} from 'connected-react-router'
+// import {
+//   routerActions,
+//   RouterAction,
+//   LOCATION_CHANGE,
+//   LocationChangeAction,
+//   CALL_HISTORY_METHOD
+// } from 'connected-react-router'
 
 export enum LAYOUT_ACTIONS {
   CHANGE_THEME = 'LAYOUT_CHANGE_THEME',
@@ -52,33 +52,33 @@ function* watchThemeChange() {
   })
 }
 
-function* watchRouterChange() {
-  // solves the problem of initial state url navigation
-  yield takeEvery(LOCATION_CHANGE, function*(action: LocationChangeAction) {
-    console.log(action)
-    debugger
-    // const state: State = yield select()
-    // if(action.payload.action==='PUSH'){
-    //   console.log(action);
-    // }
-    yield 1
-  })
-}
+// function* watchRouterChange() {
+//   // solves the problem of initial state url navigation
+//   yield takeEvery(LOCATION_CHANGE, function*(action: LocationChangeAction) {
+//     console.log(action)
+//     debugger
+//     // const state: State = yield select()
+//     // if(action.payload.action==='PUSH'){
+//     //   console.log(action);
+//     // }
+//     yield 1
+//   })
+// }
 
-function* watchRouterChange2() {
-  // solves the problem of initial state url navigation
-  yield takeEvery(CALL_HISTORY_METHOD, function*(action: LocationChangeAction) {
-    console.log(action)
+// function* watchRouterChange2() {
+//   // solves the problem of initial state url navigation
+//   yield takeEvery(CALL_HISTORY_METHOD, function*(action: LocationChangeAction) {
+//     console.log(action)
 
-    debugger
-    // const state: State = yield select()
-    // if(action.payload.action==='PUSH'){
-    // console.log(action);
-    // }
-    yield 1
-  })
-}
+//     debugger
+//     // const state: State = yield select()
+//     // if(action.payload.action==='PUSH'){
+//     // console.log(action);
+//     // }
+//     yield 1
+//   })
+// }
 
 export function* layoutSagas() {
-  yield all([watchThemeChange(), watchRouterChange(), watchRouterChange2()])
+  yield all([watchThemeChange()]) //, watchRouterChange(), watchRouterChange2()])
 }
