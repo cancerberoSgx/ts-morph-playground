@@ -1,4 +1,4 @@
-import Project, { BinaryExpression, TypeGuards, ScriptTarget } from 'ts-morph'
+import { Project, BinaryExpression, TypeGuards, ScriptTarget } from 'ts-morph'
 import { dispatch } from '../..'
 import { packedExamples } from '../../examples/packedExamples'
 import { EXAMPLES_ACTIONS } from '../examples'

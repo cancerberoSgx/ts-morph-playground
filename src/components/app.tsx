@@ -23,7 +23,7 @@ class App_ extends React.Component<P, {}> {
     return (
       <article className={classes.root}>
         <ForkRibbon />
-        <Header {...this.props as any} />
+        <Header {...(this.props as any)} />
         <div className={classes.wrapper}>
           <div className={classes.examples}>
             <Examples />
