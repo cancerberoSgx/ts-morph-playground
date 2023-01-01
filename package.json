@@ -53,7 +53,7 @@
     "@types/react-router-dom": "^4.3.5",
     "embed-json-in-ts": "0.0.8",
     "http-server": "^0.11.1",
-    "parcel": "^1.12.3",
+    "parcel": "^2.8.2",
     "prettier": "^1.18.2",
     "typescript": "^3.5.3"
   },
